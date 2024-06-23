@@ -19,11 +19,6 @@ export async function updateFileRequest({
 }: UpdateFileReq) {
   return connection.put<UpdateFileRes>(
     `/projects/${projectId}/files/${fileId}`,
-    {
-      ...rest,
-      content: rest.content?.concat(
-        ' <p onblur="alert(\'hello\')">alert("hello")</p>',
-      ),
-    },
+    rest,
   )
 }

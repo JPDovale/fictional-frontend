@@ -69,7 +69,7 @@ export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
       return
     }
 
-    if (!/^[a-zA-Z0-9\s._@-]+$/.test(file.title)) {
+    if (!/^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/.test(file.title)) {
       toast({
         title: 'Error',
         description: 'Titulo inválido! Evite simbolos e acentos',

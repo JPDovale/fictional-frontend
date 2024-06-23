@@ -23,7 +23,7 @@ const createProjectSchema = z.object({
   name: z
     .string()
     .trim()
-    .regex(/^[a-zA-Z0-9\s._@-]+$/, 'Nome inválido! Evite simbolos.')
+    .regex(/^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/, 'Nome inválido! Evite simbolos.')
     .min(3, 'O nome precisa ter pelo menos 3 letras')
     .max(255, 'O nome pode ter no máximo 255 letras'),
   buildBlocks: z
