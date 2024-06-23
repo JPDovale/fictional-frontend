@@ -1,4 +1,4 @@
-import { SkeletonBase } from '@rComponents/ui/skeletonBase';
+import { SkeletonBase } from '@/components/ui/skeletonBase'
 
 export function EditorSkeleton() {
   return (
@@ -7,5 +7,5 @@ export function EditorSkeleton() {
       <SkeletonBase className="w-[95%] h-4 rounded-full" />
       <SkeletonBase className="w-[90%] h-4 rounded-full" />
     </div>
-  );
+  )
 }

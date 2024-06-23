@@ -1,16 +1,18 @@
-import { BuildBlocksJson } from '@modules/projects/valueObjects/BuildBlocks';
-import { useBuildBlocks } from '@rHooks/useBuildBlocks';
-import { useTheme } from '@rHooks/useTheme';
+'use client'
+
+import { useBuildBlocks } from '@/hooks/useBuildBlocks'
+import { useTheme } from '@/hooks/useTheme'
+import { BuildBlocksJson } from '@/services/projects/getProjectsRequest'
 
 interface BuildBlocsIconsProps {
-  buildBlocks: BuildBlocksJson;
+  buildBlocks: BuildBlocksJson
 }
 
 export function BuildBlocksIcons({ buildBlocks }: BuildBlocsIconsProps) {
-  const { theme } = useTheme();
-  const { getIcon } = useBuildBlocks(buildBlocks);
+  const { theme } = useTheme()
+  const { getIcon } = useBuildBlocks(buildBlocks)
 
-  const buildBlocksPair = Object.entries(buildBlocks);
+  const buildBlocksPair = Object.entries(buildBlocks)
 
   return (
     <div
@@ -18,9 +20,9 @@ export function BuildBlocksIcons({ buildBlocks }: BuildBlocsIconsProps) {
       className="flex gap-1 items-center justify-center py-2 w-full border-t border-gray800 data-[theme=dark]:border-gray500/50"
     >
       {buildBlocksPair.map(([key, value]) => {
-        if (!value) return null;
+        if (!value) return null
 
-        const Icon = getIcon(key);
+        const Icon = getIcon(key as keyof BuildBlocksJson)
 
         return (
           <Icon
@@ -29,10 +31,10 @@ export function BuildBlocksIcons({ buildBlocks }: BuildBlocsIconsProps) {
             key={key}
             size={24}
           />
-        );
+        )
       })}
     </div>
-  );
+  )
 }
 
-BuildBlocksIcons.displayName = 'CardProject.BuildBlocksIcons';
+BuildBlocksIcons.displayName = 'CardProject.BuildBlocksIcons'

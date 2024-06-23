@@ -9,17 +9,17 @@ import Mention from '@tiptap/extension-mention'
 import PlaceholderEditor from '@tiptap/extension-placeholder'
 import tippy, { Instance, Props } from 'tippy.js'
 import { SuggestionProps } from '@tiptap/suggestion'
-import { MentionList } from '@rComponents/application/Editor/components/MentionList'
-import localstorageFunctions from '@rUtils/localstorageFunctions'
-import { LocalStorageKeys } from '@rConfigs/localstorageKeys'
 import { useEffect } from 'react'
-import { PersonWithParentsResponse } from '@modules/persons/presenters/PersonWithParents.presenter'
 import { useEditorDebounce } from './useEditorDebounce'
+import { PersonPreview } from '@/services/persons/getPersonsRequest'
+import localstorageFunctions from '@/utils/localstorageFunctions'
+import { LocalStorageKeys } from '@/configs/localstorageKeys'
+import { MentionList } from '@/components/application/Editor/components/MentionList'
 
 interface NewEditor {
   preValueKey: string
   onDiff: (v: string) => void
-  personsSuggestion?: PersonWithParentsResponse[]
+  personsSuggestion?: PersonPreview[]
 }
 
 export function useEditor({
@@ -47,13 +47,13 @@ export function useEditor({
           class: 'mention',
         },
         renderLabel: ({ node }) => {
-          const name = node.attrs.id.split('<==>')[0]
+          const name = node.attrs.id.split('=-=-=')[0]
           return `@${name}`
         },
         suggestion: {
           items: ({ query }) => {
             const sugges = personsSuggestion.map(
-              (person) => `${person.name}<==>${person.id}`,
+              (person) => `${person.name}=-=-=${person.id}`,
             )
 
             return sugges

@@ -1,7 +1,4 @@
-import {
-  FilePlus,
-  LucideIcon,
-} from 'lucide-react'
+import { FilePlus, LucideIcon } from 'lucide-react'
 import { Root } from './Root'
 import { Button } from './Button'
 

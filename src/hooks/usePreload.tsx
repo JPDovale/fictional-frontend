@@ -2,19 +2,39 @@
 // import { useProjects } from '@store/Projects'
 // import { useRoutes } from '@store/Routes'
 import { useEffect } from 'react'
-import { useUser } from './useUser'
+// import { useUser } from './useUser'
 import { useInterfaceStore } from '@/stores/useInterfaceStore'
+import { CookiesKeys, useCookies } from './useCookies'
+import { connection } from '@/services/fcapi/axios'
+import { useUser } from './useUser'
 // import { useToast } from '@/components/ui/use-toast'
 
 export function usePreload() {
-  const {
-    isLoading,
-    // refetchUser
-  } = useUser()
+  const { get } = useCookies()
+  const { isLoading, refetchUser } = useUser()
   // const { toast } = useToast()
   const { loadConfig } = useInterfaceStore((state) => ({
     loadConfig: state.loadConfig,
   }))
+
+  const token = get<string>(CookiesKeys.TOKEN)
+  if (token) {
+    connection.setDefaultBearerToken(token)
+  }
+
+  useEffect(() => {
+    // localStorage.setItem(localStorageKeys.navigationHistory, '[]')
+
+    loadConfig()
+    // recoveryHistory()
+    // if (!isLoading) {
+    //   loadProjects()
+    //   loadPersons()
+    // }
+  }, [
+    // recoveryHistory, isLoading, loadProjects, loadPersons,
+    loadConfig,
+  ])
 
   // useEffect(() => {
   //   function onAuthSuccess() {
@@ -42,21 +62,12 @@ export function usePreload() {
   //   loadPersons: state.loadPersons,
   // }))
 
-  useEffect(() => {
-    // localStorage.setItem(localStorageKeys.navigationHistory, '[]')
-
-    loadConfig()
-    // recoveryHistory()
-    // if (!isLoading) {
-    //   loadProjects()
-    //   loadPersons()
-    // }
-  }, [
-    // recoveryHistory, isLoading, loadProjects, loadPersons,
-    loadConfig,
-  ])
+  async function reload() {
+    await Promise.all([refetchUser(), loadConfig()])
+  }
 
   return {
     isLoading,
+    reload,
   }
 }

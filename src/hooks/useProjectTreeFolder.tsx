@@ -1,15 +1,15 @@
-import { NodeTree } from '@rComponents/application/FolderTree';
-import { Clock, Folder, Home, Settings, UserPlus } from 'lucide-react';
-import { BuildBlock } from '@modules/projects/valueObjects/BuildBlocks';
-import { makeFoundationFolderTreeNode } from '@rConfigs/projectFolderTree/foundation';
-import { useMemo } from 'react';
-import { PersonType } from '@modules/persons/entities/types';
-import { makeTypePersonsFolderTreeNode } from '@rConfigs/projectFolderTree/persons';
-import { useProject } from './useProject';
-import { useBuildBlocks } from './useBuildBlocks';
+import { Clock, Folder, Home, Settings, UserPlus } from 'lucide-react'
+import { useMemo } from 'react'
+import { useProject } from './useProject'
+import { useBuildBlocks } from './useBuildBlocks'
+import { PersonType } from '@/services/persons/getPersonRequest'
+import { NodeTree } from '@/components/application/FolderTree'
+import { BuildBlock } from '@/services/projects/getProjectsRequest'
+import { makeFoundationFolderTreeNode } from '@/configs/projectFolderTree/foundation'
+import { makeTypePersonsFolderTreeNode } from '@/configs/projectFolderTree/persons'
 
 interface UseProjectTreeFolderProps {
-  projectId?: string;
+  projectId?: string
 }
 
 export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
@@ -22,27 +22,27 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
     useDeletingPersonAttribute,
   } = useProject({
     projectId,
-  });
-  const { setDeletingPerson } = useDeletingPerson();
-  const { setDeletingPersonAttribute } = useDeletingPersonAttribute();
-  const { persons, createAttributeForPerson } = usePersons();
+  })
+  const { setDeletingPerson } = useDeletingPerson()
+  const { setDeletingPersonAttribute } = useDeletingPersonAttribute()
+  const { persons, createAttributeForPerson } = usePersons()
   const { getName, getIcon, isBlockActive } = useBuildBlocks(
-    project?.buildBlocks
-  );
+    project?.buildBlocks,
+  )
 
-  const { attributes } = usePersonsAttributes();
-  const { timelines } = useTimelines();
+  const { attributes } = usePersonsAttributes()
+  const { timelines } = useTimelines()
 
   const personsGroups = useMemo(() => {
-    const protas = persons.filter((p) => p.type === PersonType.PROTAGONIST);
-    const supportings = persons.filter((p) => p.type === PersonType.SUPPORTING);
-    const antagonists = persons.filter((p) => p.type === PersonType.ANTAGONIST);
-    const secondaries = persons.filter((p) => p.type === PersonType.SECONDARY);
-    const adversaries = persons.filter((p) => p.type === PersonType.ADVERSARY);
-    const symbolics = persons.filter((p) => p.type === PersonType.SYMBOLIC);
-    const mentors = persons.filter((p) => p.type === PersonType.MENTOR);
-    const extras = persons.filter((p) => p.type === PersonType.EXTRA);
-    const comics = persons.filter((p) => p.type === PersonType.COMIC);
+    const protas = persons.filter((p) => p.type === PersonType.PROTAGONIST)
+    const supportings = persons.filter((p) => p.type === PersonType.SUPPORTING)
+    const antagonists = persons.filter((p) => p.type === PersonType.ANTAGONIST)
+    const secondaries = persons.filter((p) => p.type === PersonType.SECONDARY)
+    const adversaries = persons.filter((p) => p.type === PersonType.ADVERSARY)
+    const symbolics = persons.filter((p) => p.type === PersonType.SYMBOLIC)
+    const mentors = persons.filter((p) => p.type === PersonType.MENTOR)
+    const extras = persons.filter((p) => p.type === PersonType.EXTRA)
+    const comics = persons.filter((p) => p.type === PersonType.COMIC)
 
     return {
       [PersonType.PROTAGONIST]: protas,
@@ -54,15 +54,15 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
       [PersonType.MENTOR]: mentors,
       [PersonType.EXTRA]: extras,
       [PersonType.COMIC]: comics,
-    };
-  }, [persons]);
+    }
+  }, [persons])
 
   const homeNode: NodeTree = {
     id: '3',
     icon: Home,
     name: 'Inicio',
     path: `/projects/${projectId}`,
-  };
+  }
 
   if (!projectId) {
     return {
@@ -71,7 +71,7 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
       icon: Folder,
       name: 'Projeto',
       childs: [homeNode],
-    };
+    }
   }
 
   const foundationNode = makeFoundationFolderTreeNode({
@@ -79,7 +79,7 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
     icon: getIcon(BuildBlock.FOUNDATION),
     name: getName(BuildBlock.FOUNDATION),
     isToShow: isBlockActive(BuildBlock.FOUNDATION),
-  });
+  })
 
   const childs = Object.entries(personsGroups).map(([key, value]) => {
     return makeTypePersonsFolderTreeNode({
@@ -90,8 +90,8 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
       openDeletePersonConfirmation: setDeletingPerson,
       openDeletePersonAttributeConfirmation: setDeletingPersonAttribute,
       attributes,
-    });
-  });
+    })
+  })
 
   const personsNode: NodeTree = {
     id: '5',
@@ -107,11 +107,11 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
       },
     ],
     childs,
-  };
+  }
 
   const timeLinesNode: NodeTree = {
     id: '6',
-    path: `/projects/${projectId}/time-lines`,
+    path: `/projects/${projectId}/timelines`,
     icon: getIcon(BuildBlock.TIME_LINES),
     isToShow: isBlockActive(BuildBlock.TIME_LINES),
     name: getName(BuildBlock.TIME_LINES),
@@ -119,16 +119,16 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
       id: timeline.id,
       name: timeline.name,
       icon: Clock,
-      path: `/projects/${projectId}/time-lines/${timeline.id}`,
+      path: `/projects/${projectId}/timelines/${timeline.id}`,
     })),
-  };
+  }
 
   const settingsNode: NodeTree = {
     id: '7',
     path: `/projects/${projectId}/config`,
     icon: Settings,
     name: 'Configurações',
-  };
+  }
 
   return {
     closed: false,
@@ -142,5 +142,5 @@ export function useProjectTreeFolder({ projectId }: UseProjectTreeFolderProps) {
       timeLinesNode,
       settingsNode,
     ],
-  };
+  }
 }

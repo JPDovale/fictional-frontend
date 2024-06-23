@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
-import { useTheme } from '@rHooks/useTheme';
-import { tv } from 'tailwind-variants';
-import { Theme } from '@rStores/useInterfaceStore';
+import { useTheme } from '@/hooks/useTheme'
+import { Theme } from '@/styles/theme'
+import { ReactNode } from 'react'
+import { tv } from 'tailwind-variants'
 
 export const bubbleOptionStyles = tv({
   base: 'p-2 text-sm flex items-center justify-center gap-1.5 leading-none font-medium ease-in-out duration-300',
@@ -14,16 +14,16 @@ export const bubbleOptionStyles = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 interface BubbleOptionProps {
-  icon: ReactNode;
-  isActive: boolean;
-  handler: () => void;
+  icon: ReactNode
+  isActive: boolean
+  handler: () => void
 }
 
 export function BubbleOption({ icon, handler, isActive }: BubbleOptionProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <button
@@ -34,5 +34,5 @@ export function BubbleOption({ icon, handler, isActive }: BubbleOptionProps) {
     >
       {icon}
     </button>
-  );
+  )
 }

@@ -1,7 +1,7 @@
+import { useTheme } from '@/hooks/useTheme'
+import { Theme } from '@/styles/theme'
 import { ReactNode } from 'react'
-import { useTheme } from '@rHooks/useTheme'
 import { tv } from 'tailwind-variants'
-import { Theme } from '@rStores/useInterfaceStore'
 
 const highlighterOptionStyles = tv({
   base: 'p-2 min-w-[220px] text-xs flex items-center gap-2 leading-none font-medium ease-in-out duration-300',

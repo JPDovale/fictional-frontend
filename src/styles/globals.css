@@ -115,7 +115,7 @@
 
 @layer base {
   body {
-    @apply bg-gray900 text-text800 font-body overflow-hidden;
+    @apply font-body overflow-hidden;
   }
 
   a,

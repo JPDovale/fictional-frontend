@@ -1,12 +1,12 @@
-import * as HoverCard from '@radix-ui/react-hover-card';
-import { InfoIcon } from 'lucide-react';
-import { ReactNode } from 'react';
-import { Editor as EditorTipTap } from '@tiptap/react';
-import { useTheme } from '@rHooks/useTheme';
-import { tv } from 'tailwind-variants';
-import { Theme } from '@rStores/useInterfaceStore';
-import { Editor } from './Editor';
-import { EditorMenuOption } from './Editor/components/FloatingMenuEditor';
+import * as HoverCard from '@radix-ui/react-hover-card'
+import { InfoIcon } from 'lucide-react'
+import { ReactNode } from 'react'
+import { Editor as EditorTipTap } from '@tiptap/react'
+import { tv } from 'tailwind-variants'
+import { Editor } from './Editor'
+import { EditorMenuOption } from './Editor/components/FloatingMenuEditor'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
 
 const blockEditorTitleStyles = tv({
   base: 'text-start flex gap-3 leading-none items-center font-bold uppercase ',
@@ -17,7 +17,7 @@ const blockEditorTitleStyles = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 const hoverContentStyles = tv({
   base: 'relative max-w-lg p-2 z-50 rounded-sm border border-purple900 shadow-lg shadow-semiTransparentBack',
@@ -28,7 +28,7 @@ const hoverContentStyles = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 const hoverInnerContentStyles = tv({
   base: 'text-xs text-justify font-bold',
@@ -39,14 +39,14 @@ const hoverInnerContentStyles = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 interface BlockEditorProps {
-  title?: string;
-  content?: ReactNode;
-  editor: EditorTipTap | null;
-  menuOptions?: EditorMenuOption[];
-  isLoading?: boolean;
+  title?: string
+  content?: ReactNode
+  editor: EditorTipTap | null
+  menuOptions?: EditorMenuOption[]
+  isLoading?: boolean
 }
 
 export function BlockEditor({
@@ -56,7 +56,7 @@ export function BlockEditor({
   menuOptions,
   isLoading,
 }: BlockEditorProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <div className="pt-16  w-full flex flex-col">
@@ -88,5 +88,5 @@ export function BlockEditor({
         isLoading={isLoading}
       />
     </div>
-  );
+  )
 }

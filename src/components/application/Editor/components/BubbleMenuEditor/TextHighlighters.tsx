@@ -1,16 +1,16 @@
-import { Editor } from '@tiptap/react';
-import { CaseUpper, PaintBucket } from 'lucide-react';
-import { useTheme } from '@rHooks/useTheme';
-import { colors } from '@rStyles/colors';
-import { tv } from 'tailwind-variants';
-import { Theme } from '@rStores/useInterfaceStore';
-import { BubbleOption, bubbleOptionStyles } from './BubbleOption';
-import { HighlighterOption } from './HighlighterOption';
+import { Editor } from '@tiptap/react'
+import { CaseUpper, PaintBucket } from 'lucide-react'
+import { tv } from 'tailwind-variants'
+import { bubbleOptionStyles } from './BubbleOption'
+import { HighlighterOption } from './HighlighterOption'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@rComponents/ui/popover';
+} from '@/components/ui/popover'
+import { colors } from '@/styles/colors'
 
 const textHighlightersStyles = tv({
   base: 'mt-2 rounded-md shadow-lg shadow-semiTransparentBack overflow-x-hidden overflow-y-auto max-h-80 p-0 text-text100 w-60',
@@ -21,14 +21,14 @@ const textHighlightersStyles = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 interface TextHighlightersProps {
-  editor: Editor;
+  editor: Editor
 }
 
 export function TextHighlighters({ editor }: TextHighlightersProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <Popover>
@@ -416,5 +416,5 @@ export function TextHighlighters({ editor }: TextHighlightersProps) {
         />
       </PopoverContent>
     </Popover>
-  );
+  )
 }

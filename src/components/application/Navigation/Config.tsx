@@ -1,12 +1,13 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { Computer, Moon, Settings, Sun, X } from 'lucide-react';
-import { useState } from 'react';
-import { useTheme } from '@rHooks/useTheme';
-import { Theme } from '@rStores/useInterfaceStore';
-import { tv } from 'tailwind-variants';
-import localstorageFunctions from '@rUtils/localstorageFunctions';
-import { LocalStorageKeys } from '@rConfigs/localstorageKeys';
-import { Button } from '../Button';
+'use client'
+import * as Dialog from '@radix-ui/react-dialog'
+import { Computer, Moon, Settings, Sun, X } from 'lucide-react'
+import { useState } from 'react'
+import { tv } from 'tailwind-variants'
+import { Button } from '../Button'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
+import localstorageFunctions from '@/utils/localstorageFunctions'
+import { LocalStorageKeys } from '@/configs/localstorageKeys'
 
 export const configContentStyle = tv({
   base: 'data-[state=open]:animate-contentShow absolute w-[30%] h-[70%] top-[50%] left-[50%] translate-x-[-50%] rounded-md border border-purple900 shadow-2xl shadow-black translate-y-[-50%] z-[101]',
@@ -17,22 +18,22 @@ export const configContentStyle = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 interface ConfigProps {
-  isOpen: boolean;
+  isOpen: boolean
 }
 
 export function Config({ isOpen }: ConfigProps) {
-  const [configIsOpen, setConfigIsOpen] = useState(false);
+  const [configIsOpen, setConfigIsOpen] = useState(false)
 
-  const { theme, changeTheme } = useTheme();
+  const { theme, changeTheme } = useTheme()
 
-  const themeSaved = localstorageFunctions.Get<Theme>(LocalStorageKeys.THEME);
+  const themeSaved = localstorageFunctions.Get<Theme>(LocalStorageKeys.THEME)
 
-  const isDarkTheme = themeSaved === Theme.DARK;
-  const isLightTheme = themeSaved === Theme.LIGHT;
-  const isSystemTheme = themeSaved === Theme.SYSTEM;
+  const isDarkTheme = themeSaved === Theme.DARK
+  const isLightTheme = themeSaved === Theme.LIGHT
+  const isSystemTheme = themeSaved === Theme.SYSTEM
 
   return (
     <Dialog.Root open={configIsOpen} onOpenChange={setConfigIsOpen}>
@@ -118,7 +119,7 @@ export function Config({ isOpen }: ConfigProps) {
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
-  );
+  )
 }
 
-Config.displayName = 'Navigation.Config';
+Config.displayName = 'Navigation.Config'

@@ -1,10 +1,11 @@
+'use client'
 import * as HoverCard from '@radix-ui/react-hover-card'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { tv } from 'tailwind-variants'
-import { Theme } from '@rStores/useInterfaceStore'
-import { useTheme } from '@rHooks/useTheme'
 import { HeaderLink } from '.'
 import { Button as ButtonDefault } from '../Button'
+import { Theme } from '@/styles/theme'
+import { usePathname, useRouter } from 'next/navigation'
+import { useTheme } from '@/hooks/useTheme'
 
 interface ButtonProps {
   link: HeaderLink
@@ -22,9 +23,9 @@ const hoverCardContentStyles = tv({
 })
 
 export function Button({ link }: ButtonProps) {
-  const { pathname } = useLocation()
+  const pathname = usePathname()
   const { theme } = useTheme()
-  const navigate = useNavigate()
+  const navigate = useRouter()
 
   return (
     <HoverCard.Root openDelay={2000}>
@@ -34,7 +35,7 @@ export function Button({ link }: ButtonProps) {
           size="sm"
           active={pathname === link.pathname}
           disabled={link.disabled}
-          onClick={() => navigate(link.pathname)}
+          onClick={() => navigate.push(link.pathname)}
         >
           <ButtonDefault.Icon>
             <link.Icon />

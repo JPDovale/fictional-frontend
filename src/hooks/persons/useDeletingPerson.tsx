@@ -1,67 +1,60 @@
-import { useToast } from '@rComponents/ui/use-toast';
-import { useUser } from '@rHooks/useUser';
-import { usePersons } from './usePersons';
-import { useInterfaceStore } from '@rStores/useInterfaceStore';
-import { Requester } from '@infra/requester/requester';
-import { DeletePersonBody } from '@modules/persons/gateways/DeletePerson.gateway';
-import { Accessors } from '@infra/requester/types';
-import { StatusCode } from '@shared/core/types/StatusCode';
-import { usePersonsAttributes } from './usePersonsAttributes';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useToast } from '@/components/ui/use-toast'
+import { usePersons } from './usePersons'
+import { usePersonsAttributes } from './usePersonsAttributes'
+import { usePathname, useRouter } from 'next/navigation'
+import { useInterfaceStore } from '@/stores/useInterfaceStore'
+import { deletePersonRequest } from '@/services/persons/deletePersonRequest'
+import { StatusCode } from '@/shared/types/types/StatusCode'
 
 interface UseDeletingPersonProps {
-  projectId?: string;
+  projectId?: string
 }
 
 export function useDeletingPerson({ projectId }: UseDeletingPersonProps) {
-  const { user } = useUser();
-  const { toast } = useToast();
-  const { persons, refetchPersons } = usePersons({ projectId });
-  const { refetchAttributes } = usePersonsAttributes({ projectId });
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { toast } = useToast()
+  const { persons, refetchPersons } = usePersons({ projectId })
+  const { refetchAttributes } = usePersonsAttributes({ projectId })
   const { deletingPerson, setDeletingPerson } = useInterfaceStore((state) => ({
     deletingPerson: state.deletingPerson,
     setDeletingPerson: state.setDeletingPerson,
-  }));
+  }))
 
-  const person = persons.find((p) => p.id === deletingPerson);
+  const navigate = useRouter()
+  const pathname = usePathname()
+  const person = persons.find((p) => p.id === deletingPerson)
+
   async function deletePerson() {
-    if (!projectId || !user || !deletingPerson) return;
+    if (!projectId || !deletingPerson) return
 
-    const response = await Requester.requester<DeletePersonBody>({
-      access: Accessors.DELETE_PERSON,
-      data: {
-        personId: deletingPerson,
-        userId: user.id,
-        projectId,
-      },
-    });
+    const response = await deletePersonRequest({
+      projectId,
+      personId: deletingPerson,
+    })
 
     if (response.status !== StatusCode.NO_CONTENT) {
       return toast({
         title: response.title,
         description: response.message,
         variant: 'destructive',
-      });
+      })
     }
 
     if (response.status === StatusCode.NO_CONTENT) {
       toast({
         title: 'Personagem movido para lixeira',
         description: `O personagem ${person?.name} foi movido para lixeira.`,
-      });
+      })
 
-      await refetchPersons();
-      await refetchAttributes();
+      await refetchPersons()
+      await refetchAttributes()
 
       if (pathname.includes(deletingPerson)) {
-        navigate(`/projects/${projectId}`);
+        navigate.push(`/projects/${projectId}`)
       }
 
-      setDeletingPerson(null);
+      setDeletingPerson(null)
     }
   }
 
-  return { deletePerson, deletingPerson, setDeletingPerson, person };
+  return { deletePerson, deletingPerson, setDeletingPerson, person }
 }

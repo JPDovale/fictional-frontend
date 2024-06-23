@@ -5,10 +5,10 @@ import {
   RxStrikethrough,
 } from 'react-icons/rx'
 import { Editor } from '@tiptap/react'
-import { useTheme } from '@rHooks/useTheme'
 import { tv } from 'tailwind-variants'
-import { Theme } from '@rStores/useInterfaceStore'
 import { BubbleOption } from './BubbleOption'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
 
 const groupStyles = tv({
   base: 'flex border-r ',

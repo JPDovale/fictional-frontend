@@ -5,10 +5,10 @@ import {
   RxTextAlignRight,
 } from 'react-icons/rx'
 import { Editor } from '@tiptap/react'
-import { useTheme } from '@rHooks/useTheme'
-import { Theme } from '@rStores/useInterfaceStore'
 import { tv } from 'tailwind-variants'
 import { BubbleOption } from './BubbleOption'
+import { useTheme } from '@/hooks/useTheme'
+import { Theme } from '@/styles/theme'
 
 const groupStyles = tv({
   base: 'flex border-r ',

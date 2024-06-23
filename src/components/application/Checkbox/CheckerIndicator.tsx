@@ -1,3 +1,4 @@
+'use client'
 import * as PrimitiveCheckbox from '@radix-ui/react-checkbox'
 import { Check } from 'lucide-react'
 import { forwardRef } from 'react'

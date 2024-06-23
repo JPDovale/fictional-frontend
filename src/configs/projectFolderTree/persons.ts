@@ -1,8 +1,9 @@
-import { AttributeType, PersonType } from '@modules/persons/entities/types';
-import { AttributePreviewResponse } from '@modules/persons/presenters/AttributesPreview.presenter';
-import { PersonWithParentsResponse } from '@modules/persons/presenters/PersonWithParents.presenter';
-import { NodeTree } from '@rComponents/application/FolderTree';
-import { CreateAttributeForPersonProps } from '@rHooks/persons/usePersons';
+import { NodeTree } from '@/components/application/FolderTree'
+import { CreateAttributeForPersonProps } from '@/hooks/persons/usePersons'
+import { AttributePreview } from '@/services/persons/getAttributesPreviweRequest'
+import { AttributeType } from '@/services/persons/getPersonAttributeRequest'
+import { PersonType } from '@/services/persons/getPersonRequest'
+import { PersonPreview } from '@/services/persons/getPersonsRequest'
 import {
   Apple,
   BedDouble,
@@ -21,16 +22,16 @@ import {
   Trash,
   User,
   Users,
-} from 'lucide-react';
+} from 'lucide-react'
 
 interface MakeTypePersonsFolderTreeNodeProps {
-  personsType: PersonType;
-  projectId: string;
-  attributes: AttributePreviewResponse[];
-  persons: PersonWithParentsResponse[];
-  createAttributeForPerson: (props: CreateAttributeForPersonProps) => void;
-  openDeletePersonConfirmation: (personId: string) => void;
-  openDeletePersonAttributeConfirmation: (attributeId: string) => void;
+  personsType: PersonType
+  projectId: string
+  attributes: AttributePreview[]
+  persons: PersonPreview[]
+  createAttributeForPerson: (props: CreateAttributeForPersonProps) => void
+  openDeletePersonConfirmation: (personId: string) => void
+  openDeletePersonAttributeConfirmation: (attributeId: string) => void
 }
 
 export const personTypeNameMapper = {
@@ -43,10 +44,10 @@ export const personTypeNameMapper = {
   [PersonType.SECONDARY]: 'Secundarios',
   [PersonType.ANTAGONIST]: 'Antagonistas',
   [PersonType.SUPPORTING]: 'Suportes',
-};
+}
 
 export const attributeIconsMapper = {
-  [AttributeType.APPEARENCE]: ScanFace,
+  [AttributeType.APPEARANCE]: ScanFace,
   [AttributeType.DREAM]: BedDouble,
   [AttributeType.OBJECTIVE]: Target,
   [AttributeType.PERSONALITY]: Fingerprint,
@@ -58,10 +59,10 @@ export const attributeIconsMapper = {
   [AttributeType.ADDICTION]: Cigarette,
   [AttributeType.DESIRE]: Apple,
   [AttributeType.HABIT]: LoaderCircle,
-};
+}
 
 export const attributeTypeNameMapper = {
-  [AttributeType.APPEARENCE]: 'Aparncia',
+  [AttributeType.APPEARANCE]: 'Aparncia',
   [AttributeType.DREAM]: 'Sonho',
   [AttributeType.OBJECTIVE]: 'Objetivo',
   [AttributeType.PERSONALITY]: 'Personalidade',
@@ -73,10 +74,10 @@ export const attributeTypeNameMapper = {
   [AttributeType.ADDICTION]: 'Vicio',
   [AttributeType.DESIRE]: 'Desejo',
   [AttributeType.HABIT]: 'Habito',
-};
+}
 
 export const attributeTypePathNameMapper = {
-  [AttributeType.APPEARENCE]: 'appearences',
+  [AttributeType.APPEARANCE]: 'appearances',
   [AttributeType.DREAM]: 'dreams',
   [AttributeType.OBJECTIVE]: 'objectives',
   [AttributeType.PERSONALITY]: 'personalities',
@@ -88,13 +89,13 @@ export const attributeTypePathNameMapper = {
   [AttributeType.ADDICTION]: 'addictions',
   [AttributeType.DESIRE]: 'desires',
   [AttributeType.HABIT]: 'habits',
-};
+}
 
 interface MakeAttributeActionProps {
-  type: AttributeType;
-  createAttributeForPerson: (props: CreateAttributeForPersonProps) => void;
-  personId: string;
-  actionType: 'create';
+  type: AttributeType
+  createAttributeForPerson: (props: CreateAttributeForPersonProps) => void
+  personId: string
+  actionType: 'create'
 }
 
 function makeAttributeAction({
@@ -105,7 +106,7 @@ function makeAttributeAction({
 }: MakeAttributeActionProps) {
   const actionTypeMessageMapper = {
     create: 'Criar',
-  };
+  }
 
   return {
     label: `${actionTypeMessageMapper[actionType]} ${attributeTypeNameMapper[
@@ -117,15 +118,15 @@ function makeAttributeAction({
         type,
       }),
     Icon: attributeIconsMapper[type],
-  };
+  }
 }
 
 interface MakeAttributeChildNodeProps {
-  personId: string;
-  projectId: string;
-  type: AttributeType;
-  attributes: AttributePreviewResponse[];
-  openDeletePersonAttributeConfirmation: (attributeId: string) => void;
+  personId: string
+  projectId: string
+  type: AttributeType
+  attributes: AttributePreview[]
+  openDeletePersonAttributeConfirmation: (attributeId: string) => void
 }
 
 function makeAttributeChildNode({
@@ -136,8 +137,8 @@ function makeAttributeChildNode({
   openDeletePersonAttributeConfirmation,
 }: MakeAttributeChildNodeProps) {
   const attributesThisNode = attributes.filter(
-    (attr) => attr.type === type && attr.personId === personId
-  );
+    (attr) => attr.type === type && attr.personId === personId,
+  )
 
   return {
     id: `${personId}-${type}`,
@@ -155,18 +156,18 @@ function makeAttributeChildNode({
           label: 'Mover para lixeira',
           action: () => openDeletePersonAttributeConfirmation(attr.id),
           isToShow: true,
-          type: 'danger',
+          type: 'danger' as const,
         },
       ],
     })),
-  };
+  }
 }
 
 interface MakeAttributeChildsProps {
-  personId: string;
-  projectId: string;
-  attributes: AttributePreviewResponse[];
-  openDeletePersonAttributeConfirmation: (attributeId: string) => void;
+  personId: string
+  projectId: string
+  attributes: AttributePreview[]
+  openDeletePersonAttributeConfirmation: (attributeId: string) => void
 }
 
 function makeAttributeChilds({
@@ -175,7 +176,7 @@ function makeAttributeChilds({
   attributes,
   openDeletePersonAttributeConfirmation,
 }: MakeAttributeChildsProps) {
-  const attributeTypes = Object.keys(attributeIconsMapper) as AttributeType[];
+  const attributeTypes = Object.keys(attributeIconsMapper) as AttributeType[]
 
   return attributeTypes.map((type) =>
     makeAttributeChildNode({
@@ -184,20 +185,20 @@ function makeAttributeChilds({
       type,
       attributes,
       openDeletePersonAttributeConfirmation,
-    })
-  );
+    }),
+  )
 }
 
 interface MakePersonActionsProps {
-  personId: string;
-  createAttributeForPerson: (props: CreateAttributeForPersonProps) => void;
+  personId: string
+  createAttributeForPerson: (props: CreateAttributeForPersonProps) => void
 }
 
 function makePersonActions({
   createAttributeForPerson,
   personId,
 }: MakePersonActionsProps) {
-  const attributeTypes = Object.keys(attributeIconsMapper) as AttributeType[];
+  const attributeTypes = Object.keys(attributeIconsMapper) as AttributeType[]
 
   return attributeTypes.map((type) =>
     makeAttributeAction({
@@ -205,8 +206,8 @@ function makePersonActions({
       createAttributeForPerson,
       personId,
       actionType: 'create',
-    })
-  );
+    }),
+  )
 }
 
 export function makeTypePersonsFolderTreeNode({
@@ -243,7 +244,7 @@ export function makeTypePersonsFolderTreeNode({
           label: 'Mover para lixeira',
           action: () => openDeletePersonConfirmation(person.id),
           isToShow: true,
-          type: 'danger',
+          type: 'danger' as const,
         },
       ],
 
@@ -262,7 +263,7 @@ export function makeTypePersonsFolderTreeNode({
         }),
       ],
     })),
-  };
+  }
 
-  return personNode;
+  return personNode
 }

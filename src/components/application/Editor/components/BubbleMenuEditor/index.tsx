@@ -1,15 +1,11 @@
-import { BubbleMenu, Editor } from '@tiptap/react';
-import { useTheme } from '@rHooks/useTheme';
-import { tv } from 'tailwind-variants';
-import { Theme } from '@rStores/useInterfaceStore';
-import { TextTransformers } from './TextTransformers';
-import { TextAligners } from './TextAligners';
-import { TextHighlighters } from './TextHighlighters';
-import {
-  Popover,
-  PopoverContent,
-  PopoverPortal,
-} from '@rComponents/ui/popover';
+import { BubbleMenu, Editor } from '@tiptap/react'
+import { tv } from 'tailwind-variants'
+import { TextAligners } from './TextAligners'
+import { TextHighlighters } from './TextHighlighters'
+import { useTheme } from '@/hooks/useTheme'
+import { Theme } from '@/styles/theme'
+import { Popover, PopoverContent, PopoverPortal } from '@/components/ui/popover'
+import { TextTransformers } from './TextTransformers'
 
 const bubbleMenuWrapperStyles = tv({
   base: 'shadow-lg border shadow-semiTransparentBack rounded-md overflow-hidden flex',
@@ -20,16 +16,16 @@ const bubbleMenuWrapperStyles = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 interface BubbleMenuEditorProps {
-  editor: Editor | null;
+  editor: Editor | null
 }
 
 export function BubbleMenuEditor({ editor }: BubbleMenuEditorProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
-  if (!editor) return null;
+  if (!editor) return null
 
   return (
     <Popover open>
@@ -50,5 +46,5 @@ export function BubbleMenuEditor({ editor }: BubbleMenuEditorProps) {
         </PopoverContent>
       </PopoverPortal>
     </Popover>
-  );
+  )
 }

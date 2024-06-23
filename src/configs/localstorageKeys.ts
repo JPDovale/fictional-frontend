@@ -3,4 +3,5 @@ export enum LocalStorageKeys {
   NAVIGATION_HISTORY = '@ms-navigation-history',
   THEME = '@ms-theme',
   EDITOR_TEMP_PERSISTENCE = '@ms-editor-temp-persistence',
+  WAIT_REFRESH = '@fc-wait-refresh',
 }

@@ -1,4 +1,4 @@
-import { SkeletonBase } from '../../ui/skeletonBase';
+import { SkeletonBase } from '../../ui/skeletonBase'
 
 export function Skeleton() {
   return (
@@ -10,5 +10,5 @@ export function Skeleton() {
         <SkeletonBase className="h-7 w-7 rounded-full" />
       </SkeletonBase>
     </div>
-  );
+  )
 }

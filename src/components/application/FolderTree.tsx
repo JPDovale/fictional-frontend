@@ -1,48 +1,47 @@
+import { useTheme } from '@/hooks/useTheme'
+import { isString } from 'lodash'
+import { ChevronDown, Folder, LucideIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuGroup,
   ContextMenuItem,
-  ContextMenuSeparator,
-  ContextMenuTrigger,
   ContextMenuLabel,
-} from '@rComponents/ui/context-menu';
-import { useTheme } from '@rHooks/useTheme';
-
-import { isString } from 'lodash';
-import { ChevronDown, Folder, LucideIcon } from 'lucide-react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+  ContextMenuSeparator,
+} from '../ui/context-menu'
+import { ContextMenuTrigger } from '@radix-ui/react-context-menu'
 
 interface Action {
-  label: string;
-  action: () => void | string;
-  Icon: LucideIcon;
-  type?: 'default' | 'danger';
+  label: string
+  action: () => void | string
+  Icon: LucideIcon
+  type?: 'default' | 'danger'
 }
 
 interface ActionGroup {
-  title: string;
-  actions: Action[];
+  title: string
+  actions: Action[]
 }
 
 export interface NodeTree {
-  name: string;
-  path?: string;
-  closed?: boolean;
-  isToShow?: boolean;
-  id: string;
-  childs?: NodeTree[];
-  icon?: LucideIcon;
-  actions?: Action[];
-  acctionGroups?: ActionGroup[];
+  name: string
+  path?: string
+  closed?: boolean
+  isToShow?: boolean
+  id: string
+  childs?: NodeTree[]
+  icon?: LucideIcon
+  actions?: Action[]
+  acctionGroups?: ActionGroup[]
 }
 
 interface NodeProps {
-  node: NodeTree;
-  level?: number;
-  nodeSelected: string;
-  setNodeSelected: (node: string) => void;
+  node: NodeTree
+  level?: number
+  nodeSelected: string
+  setNodeSelected: (node: string) => void
 }
 
 function Node({
@@ -61,25 +60,25 @@ function Node({
   nodeSelected,
   setNodeSelected,
 }: NodeProps) {
-  const [closed, setClosed] = useState(startClosed);
-  const { theme } = useTheme();
+  const [closed, setClosed] = useState(startClosed)
+  const { theme } = useTheme()
 
-  const navigate = useNavigate();
+  const navigate = useRouter()
 
   function handleNodeClick() {
     if (childs && childs.length > 0) {
-      setClosed((prev) => !prev);
-      return;
+      setClosed((prev) => !prev)
+      return
     }
 
     if (path) {
-      navigate(path);
+      navigate.push(path)
     }
 
-    setNodeSelected(id);
+    setNodeSelected(id)
   }
 
-  if (!isToShow) return null;
+  if (!isToShow) return null
 
   return (
     <div
@@ -121,9 +120,9 @@ function Node({
 
                   {group.actions.map((action) => {
                     function handleClick() {
-                      const res = action.action();
+                      const res = action.action()
                       if (res && isString(res)) {
-                        navigate(res);
+                        navigate.push(res)
                       }
                     }
 
@@ -143,7 +142,7 @@ function Node({
                           {action.label}
                         </span>
                       </ContextMenuItem>
-                    );
+                    )
                   })}
                 </ContextMenuGroup>
                 <ContextMenuSeparator />
@@ -152,9 +151,9 @@ function Node({
 
             {actions.map((action) => {
               function handleClick() {
-                const res = action.action();
+                const res = action.action()
                 if (res && isString(res)) {
-                  navigate(res);
+                  navigate.push(res)
                 }
               }
 
@@ -177,7 +176,7 @@ function Node({
                     {action.label}
                   </span>
                 </ContextMenuItem>
-              );
+              )
             })}
           </ContextMenuContent>
         )}
@@ -201,14 +200,14 @@ function Node({
         </div>
       )}
     </div>
-  );
+  )
 }
 
 interface TreeProps {
-  nodes: NodeTree[];
-  level?: number;
-  nodeSelected: string;
-  setNodeSelected: (node: string) => void;
+  nodes: NodeTree[]
+  level?: number
+  nodeSelected: string
+  setNodeSelected: (node: string) => void
 }
 
 function Tree({ nodes, level = 0, nodeSelected, setNodeSelected }: TreeProps) {
@@ -224,14 +223,14 @@ function Tree({ nodes, level = 0, nodeSelected, setNodeSelected }: TreeProps) {
         />
       ))}
     </>
-  );
+  )
 }
 
 interface FolderTreeProps {
-  nodes: NodeTree[];
-  nodeSelected: string;
-  title?: string;
-  setNodeSelected: (node: string) => void;
+  nodes: NodeTree[]
+  nodeSelected: string
+  title?: string
+  setNodeSelected: (node: string) => void
 }
 
 export function FolderTree({
@@ -240,7 +239,7 @@ export function FolderTree({
   title = '',
   setNodeSelected,
 }: FolderTreeProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
   return (
     <div className="relative overflow-x-hidden max-h-screen overflow-y-auto w-full pb-8">
       <div className="w-full min-w-[24rem] ">
@@ -264,5 +263,5 @@ export function FolderTree({
         </section>
       </div>
     </div>
-  );
+  )
 }

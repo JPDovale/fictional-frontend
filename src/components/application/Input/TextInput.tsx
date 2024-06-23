@@ -1,5 +1,6 @@
-import { useTheme } from '@rHooks/useTheme'
-import { Theme } from '@rStores/useInterfaceStore'
+'use client'
+import { useTheme } from '@/hooks/useTheme'
+import { Theme } from '@/styles/theme'
 import { InputHTMLAttributes, forwardRef } from 'react'
 import { tv } from 'tailwind-variants'
 

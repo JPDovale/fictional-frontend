@@ -1,23 +1,19 @@
-import { Requester } from '@infra/requester/requester';
-import { Accessors } from '@infra/requester/types';
-import { StatusCode } from '@shared/core/types/StatusCode';
-import { useQuery } from '@tanstack/react-query';
-import { useUser } from '../useUser';
+import { useQuery } from '@tanstack/react-query'
 import {
-  AttributePresented,
-  AttributeResponse,
-} from '@modules/persons/presenters/Attribute.presenter';
-import { GetPersonAttributeBody } from '@modules/persons/gateways/GetPersonAttribute.gateway';
-import { useToast } from '@rComponents/ui/use-toast';
+  Attribute,
+  getPersonAttributeRequest,
+} from '@/services/persons/getPersonAttributeRequest'
+import { useToast } from '@/components/ui/use-toast'
+import { StatusCode } from '@/shared/types/types/StatusCode'
 
 interface UseAttributeProps {
-  projectId?: string;
-  personId?: string;
-  attributeId?: string;
+  projectId?: string
+  personId?: string
+  attributeId?: string
 }
 
 interface AttributeQueryData {
-  attribute: AttributeResponse | null;
+  attribute: Attribute | null
 }
 
 export function useAttribute({
@@ -25,8 +21,7 @@ export function useAttribute({
   personId,
   attributeId,
 }: UseAttributeProps) {
-  const { user } = useUser();
-  const { toast } = useToast();
+  const { toast } = useToast()
 
   const { data, isLoading, refetch } = useQuery<
     unknown,
@@ -37,53 +32,46 @@ export function useAttribute({
       `projects:${projectId}:persons:${personId}:attributes:${attributeId}`,
     ],
     queryFn: async () => {
-      if (!user?.id || !projectId || !personId || !attributeId) {
+      if (!projectId || !personId || !attributeId) {
         return {
           attribute: null,
-        };
+        }
       }
 
-      const response = await Requester.requester<
-        GetPersonAttributeBody,
-        AttributePresented
-      >({
-        access: Accessors.GET_PERSON_ATTRIBUTE,
-        data: {
-          userId: user?.id ?? '',
-          projectId,
-          personId,
-          attributeId,
-        },
-      });
+      const response = await getPersonAttributeRequest({
+        projectId,
+        personId,
+        attributeId,
+      })
 
       if (response.status !== StatusCode.OK) {
         toast({
           title: response.title,
           description: response.message,
           variant: 'destructive',
-        });
+        })
       }
 
       if (response.status === StatusCode.OK && response.data) {
-        const { attribute } = response.data;
+        const { attribute } = response.data
 
         return {
           attribute,
-        };
+        }
       }
 
       return {
         attribute: null,
-      };
+      }
     },
     staleTime: 1000 * 60 * 5,
-  });
+  })
 
-  const attribute = data?.attribute ?? null;
+  const attribute = data?.attribute ?? null
 
   return {
     attribute,
     isLoadingAttribute: isLoading,
     refetchAttribute: refetch,
-  };
+  }
 }

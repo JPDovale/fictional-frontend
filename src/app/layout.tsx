@@ -8,6 +8,7 @@ import {
 import '../styles/globals.css'
 import { QueryProvider } from '@/services/QueryProvider'
 import { Toaster } from '@/components/ui/toaster'
+import { PreloadProvider } from '@/services/PreloadProvider'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -49,7 +50,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={fonts.map((f) => f.variable).join(' ')}>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <PreloadProvider>{children}</PreloadProvider>
+        </QueryProvider>
         <Toaster />
       </body>
     </html>

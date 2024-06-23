@@ -1,4 +1,4 @@
-import { useInterfaceStore } from '@rStores/useInterfaceStore'
+import { useInterfaceStore } from '@/stores/useInterfaceStore'
 
 export function useNav() {
   const { navIsOpen, handleChangeOpenNav } = useInterfaceStore((state) => ({

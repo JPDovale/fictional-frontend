@@ -11,4 +11,4 @@ export const monthsMapper = {
   10: 'Outubro',
   11: 'Novembro',
   12: 'Dezembro',
-} as { [x: number]: string };
+} as { [x: number]: string }

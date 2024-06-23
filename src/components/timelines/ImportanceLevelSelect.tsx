@@ -1,18 +1,27 @@
-import { ImportanceLevel } from '@modules/timelines/entities/Event';
-import { Input } from '@rComponents/application/Input';
-import { Command, CommandGroup, CommandItem } from '@rComponents/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@rComponents/ui/popover';
-import { Check } from 'lucide-react';
-import { useState } from 'react';
+import { Check } from 'lucide-react'
+import { useState } from 'react'
+import { Input } from '../application/Input'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { tv } from 'tailwind-variants'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
+import { ImportanceLevel } from '@/services/timelines/getTimelineRequest'
+
+const itemStyles = tv({
+  base: 'relative z-[150] flex font-bold cursor-pointer bg-gray200 w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent  data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+  variants: {
+    theme: {
+      [Theme.DARK]: 'aria-selected:bg-gray400 text-text100 ',
+      [Theme.LIGHT]: '',
+      [Theme.SYSTEM]: '',
+    },
+  },
+})
 
 interface ImportanceLevelSelectProps {
-  label: string;
-  importanceLevel?: number | null;
-  setImportanceLevel: (importanceLevel: ImportanceLevel) => void;
+  label: string
+  importanceLevel?: number | null
+  setImportanceLevel: (importanceLevel: ImportanceLevel) => void
 }
 
 export const importanceMapper = {
@@ -26,7 +35,7 @@ export const importanceMapper = {
   8: 'h',
   9: 'i',
   10: 'j',
-} as { [x: number]: string };
+} as { [x: number]: string }
 
 export function ImportanceLevelSelect({
   label,
@@ -34,7 +43,9 @@ export function ImportanceLevelSelect({
   setImportanceLevel,
 }: ImportanceLevelSelectProps) {
   const [openImportanceLevelPicker, setOpenImportanceLevelPicker] =
-    useState(false);
+    useState(false)
+
+  const { theme } = useTheme()
 
   return (
     <Input.Root>
@@ -59,31 +70,35 @@ export function ImportanceLevelSelect({
           </Input.Input>
         </PopoverTrigger>
 
-        <PopoverContent align="start" className="p-0 w-96 overflow-y-auto">
-          <Command className="z-[150]">
-            <CommandGroup>
-              {Array.from({ length: 10 }).map((_, i) => (
-                <CommandItem
-                  key={i}
-                  data-importance={importanceMapper[i + 1]}
-                  className="font-bold border-r-8 data-[importance=a]:border-r-importance1 data-[importance=b]:border-r-importance2 data-[importance=c]:border-r-importance3 data-[importance=d]:border-r-importance4 data-[importance=e]:border-r-importance5 data-[importance=f]:border-r-importance6 data-[importance=g]:border-r-importance7 data-[importance=h]:border-r-importance8 data-[importance=i]:border-r-importance9 data-[importance=j]:border-r-importance10"
-                  onSelect={() => {
-                    setImportanceLevel((i + 1) as ImportanceLevel);
-                    setOpenImportanceLevelPicker(false);
-                  }}
-                >
-                  <Check
-                    data-hidden={importanceLevel !== i + 1}
-                    className="w-4 h-4 data-[hidden=true]:invisible mr-2"
-                  />
+        <PopoverContent
+          align="start"
+          className="p-0 w-96 overflow-y-auto overflow-x-hidden"
+        >
+          {Array.from({ length: 10 }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              data-importance={importanceMapper[i + 1]}
+              className={itemStyles({
+                theme,
+                className:
+                  'font-bold border-r-8 data-[importance=a]:border-r-importance1 data-[importance=b]:border-r-importance2 data-[importance=c]:border-r-importance3 data-[importance=d]:border-r-importance4 data-[importance=e]:border-r-importance5 data-[importance=f]:border-r-importance6 data-[importance=g]:border-r-importance7 data-[importance=h]:border-r-importance8 data-[importance=i]:border-r-importance9 data-[importance=j]:border-r-importance10',
+              })}
+              onClick={() => {
+                setImportanceLevel((i + 1) as ImportanceLevel)
+                setOpenImportanceLevelPicker(false)
+              }}
+            >
+              <Check
+                data-hidden={importanceLevel !== i + 1}
+                className="w-4 h-4 data-[hidden=true]:invisible mr-2"
+              />
 
-                  <span className="text-xs">Nivel {i + 1}</span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </Command>
+              <span className="text-xs">Nivel {i + 1}</span>
+            </button>
+          ))}
         </PopoverContent>
       </Popover>
     </Input.Root>
-  );
+  )
 }

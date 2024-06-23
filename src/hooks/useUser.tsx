@@ -1,44 +1,18 @@
+import { getUserRequest } from '@/services/users/getUserRequest'
 import { StatusCode } from '@/shared/types/types/StatusCode'
-import { Requester } from '@infra/requester/requester'
-import { Accessors } from '@infra/requester/types'
-import { CreateUserBody } from '@modules/users/gateways/CreateUser.gateway'
-import { GetUserBody } from '@modules/users/gateways/GetUser.gateway'
-import { UserPresented } from '@modules/users/presenters/User.presenter'
 import { useQuery } from '@tanstack/react-query'
 
 export function useUser() {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['user'],
     queryFn: async () => {
-      const response = await Requester.requester<null, UserPresented>({
-        access: Accessors.GET_FIRST_USER,
-        data: null,
-      })
+      const response = await getUserRequest()
 
       if (response.status === StatusCode.OK && response.data) {
         return {
           user: response.data.user,
         }
       }
-
-      // if (response.status === StatusCode.NOT_FOUND) {
-      //   const _response = await Requester.requester<
-      //     CreateUserBody,
-      //     UserPresented
-      //   >({
-      //     access: Accessors.CREATE_USER,
-      //     data: {
-      //       name: `FC User ${(Math.random() * 100).toString().split('.')[1]}`,
-      //       email: 'ms@user.com',
-      //     },
-      //   })
-
-      //   if (_response.status === StatusCode.CREATED && _response.data) {
-      //     return {
-      //       user: _response.data.user,
-      //     }
-      //   }
-      // }
 
       return {
         user: null,

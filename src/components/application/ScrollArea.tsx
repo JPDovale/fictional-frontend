@@ -1,3 +1,4 @@
+'use client'
 import * as Scroll from '@radix-ui/react-scroll-area'
 import { ReactNode } from 'react'
 

@@ -11,4 +11,4 @@ export const maxDayForMonthsMapper = {
   10: 31, // Outubro
   11: 30, // Novembro
   12: 31, // Dezembro
-} as { [x: number]: number };
+} as { [x: number]: number }

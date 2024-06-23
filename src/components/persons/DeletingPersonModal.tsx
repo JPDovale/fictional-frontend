@@ -1,23 +1,23 @@
-import { Button } from '@rComponents/application/Button';
+import { useProject } from '@/hooks/useProject'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@rComponents/ui/dialog';
-import { useProject } from '@rHooks/useProject';
+} from '../ui/dialog'
+import { Button } from '../application/Button'
 
 interface DeletingPersonModalProps {
-  projectId?: string;
+  projectId?: string
 }
 
 export function DeletingPersonModal({ projectId }: DeletingPersonModalProps) {
-  const { useDeletingPerson } = useProject({ projectId });
+  const { useDeletingPerson } = useProject({ projectId })
   const { deletingPerson, person, deletePerson, setDeletingPerson } =
-    useDeletingPerson();
+    useDeletingPerson()
 
-  if (!person) return null;
+  if (!person) return null
   return (
     <Dialog open={!!deletingPerson}>
       <DialogContent className="p-4">
@@ -48,5 +48,5 @@ export function DeletingPersonModal({ projectId }: DeletingPersonModalProps) {
         </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

@@ -1,13 +1,13 @@
 interface NavigationTitleProps {
-  navIsOpen?: boolean;
-  handleChangeOpenNav?: () => void;
+  navIsOpen?: boolean
+  handleChangeOpenNav?: () => void
 }
 
 export function Title({
   navIsOpen = false,
   handleChangeOpenNav,
 }: NavigationTitleProps) {
-  if (navIsOpen) return <> Fictional</>;
+  if (navIsOpen) return <> Fictional</>
 
   return (
     <button
@@ -17,7 +17,7 @@ export function Title({
     >
       F
     </button>
-  );
+  )
 }
 
-Title.displayName = 'Navigation.Title';
+Title.displayName = 'Navigation.Title'

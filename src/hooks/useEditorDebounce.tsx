@@ -1,5 +1,5 @@
-import { LocalStorageKeys } from '@rConfigs/localstorageKeys'
-import localstorageFunctions from '@rUtils/localstorageFunctions'
+import { LocalStorageKeys } from '@/configs/localstorageKeys'
+import localstorageFunctions from '@/utils/localstorageFunctions'
 import { useEffect } from 'react'
 
 interface UseEditorDebounceProps {

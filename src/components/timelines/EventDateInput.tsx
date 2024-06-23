@@ -1,27 +1,36 @@
-import { Button } from '@rComponents/application/Button';
-import { Input } from '@rComponents/application/Input';
-import { Command, CommandGroup, CommandItem } from '@rComponents/ui/command';
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from '@rComponents/ui/popover';
-import { Check, Trash } from 'lucide-react';
-import { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { Check, Trash } from 'lucide-react'
+import { useState } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
+import { Input } from '../application/Input'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { Button } from '../application/Button'
+import { Theme } from '@/styles/theme'
+import { tv } from 'tailwind-variants'
+import { useTheme } from '@/hooks/useTheme'
+
+const itemStyles = tv({
+  base: 'relative flex font-bold cursor-pointer bg-gray200 w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent  data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+  variants: {
+    theme: {
+      [Theme.DARK]: 'aria-selected:bg-gray400 text-text100 ',
+      [Theme.LIGHT]: '',
+      [Theme.SYSTEM]: '',
+    },
+  },
+})
 
 interface EventDateInputProps {
-  label: string;
-  day: UseFormRegisterReturn;
-  month: UseFormRegisterReturn;
-  year: UseFormRegisterReturn;
-  hour: UseFormRegisterReturn;
-  minute: UseFormRegisterReturn;
-  second: UseFormRegisterReturn;
-  setPeriod: (period: -1 | 0) => void;
-  period?: number | null;
-  isWithCleaner?: boolean;
-  onClean?: () => void;
+  label: string
+  day: UseFormRegisterReturn
+  month: UseFormRegisterReturn
+  year: UseFormRegisterReturn
+  hour: UseFormRegisterReturn
+  minute: UseFormRegisterReturn
+  second: UseFormRegisterReturn
+  setPeriod: (period: -1 | 0) => void
+  period?: number | null
+  isWithCleaner?: boolean
+  onClean?: () => void
 }
 
 export function EventDateInput({
@@ -37,7 +46,9 @@ export function EventDateInput({
   isWithCleaner = false,
   onClean,
 }: EventDateInputProps) {
-  const [openDatePeriodPicker, setOpenDatePeriodPicker] = useState(false);
+  const [openDatePeriodPicker, setOpenDatePeriodPicker] = useState(false)
+
+  const { theme } = useTheme()
 
   return (
     <Input.Root>
@@ -73,42 +84,38 @@ export function EventDateInput({
             </Input.Input>
           </PopoverTrigger>
 
-          <PopoverContent className="p-0 w-64 max-h-36">
-            <Command>
-              <CommandGroup>
-                <CommandItem
-                  className="font-bold"
-                  value="-1"
-                  onSelect={() => {
-                    setPeriod(-1);
-                    setOpenDatePeriodPicker(false);
-                  }}
-                >
-                  <Check
-                    data-hidden={period !== -1}
-                    className="w-4 h-4 data-[hidden=true]:invisible mr-2"
-                  />
+          <PopoverContent className="p-0 w-64 max-h-36 flex flex-col overflow-x-hidden">
+            <button
+              className={itemStyles({ theme })}
+              type="button"
+              onClick={() => {
+                setPeriod(-1)
+                setOpenDatePeriodPicker(false)
+              }}
+            >
+              <Check
+                data-hidden={period !== -1}
+                className="w-4 h-4 data-[hidden=true]:invisible mr-2"
+              />
 
-                  <span className="text-xs">Antes de Cristo</span>
-                </CommandItem>
+              <span className="text-xs">Antes de Cristo</span>
+            </button>
 
-                <CommandItem
-                  className="font-bold"
-                  value="0"
-                  onSelect={() => {
-                    setPeriod(0);
-                    setOpenDatePeriodPicker(false);
-                  }}
-                >
-                  <Check
-                    data-hidden={period !== 0}
-                    className="w-4 h-4 data-[hidden=true]:invisible mr-2"
-                  />
+            <button
+              className={itemStyles({ theme })}
+              type="button"
+              onClick={() => {
+                setPeriod(0)
+                setOpenDatePeriodPicker(false)
+              }}
+            >
+              <Check
+                data-hidden={period !== 0}
+                className="w-4 h-4 data-[hidden=true]:invisible mr-2"
+              />
 
-                  <span className="text-xs">Depois de Cristo</span>
-                </CommandItem>
-              </CommandGroup>
-            </Command>
+              <span className="text-xs">Depois de Cristo</span>
+            </button>
           </PopoverContent>
         </Popover>
 
@@ -146,5 +153,5 @@ export function EventDateInput({
         <span className="text-xs font-bold opacity-60">Sec</span>
       </div>
     </Input.Root>
-  );
+  )
 }

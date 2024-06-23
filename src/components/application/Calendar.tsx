@@ -1,32 +1,32 @@
-import { CaretLeft, CaretRight } from '@phosphor-icons/react';
-import { Button } from './Button';
-import { SkeletonBase } from '@rComponents/ui/skeletonBase';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react'
+import { Button } from './Button'
+import { SkeletonBase } from '../ui/skeletonBase'
 
 interface CalendarDate {
-  day: number;
-  month: number;
-  year: number;
-  dateString: string;
-  numberEvents: number;
+  day: number
+  month: number
+  year: number
+  dateString: string
+  numberEvents: number
 }
 
 interface CalendarDay {
-  date: CalendarDate;
-  disabled: boolean;
+  date: CalendarDate
+  disabled: boolean
 }
 
 interface CalendarWeek {
-  week: number;
-  days: CalendarDay[];
+  week: number
+  days: CalendarDay[]
 }
 
 interface CalendarProps {
-  title: string;
-  calendarWeeks: CalendarWeek[];
-  onSelectAvailable: (date: CalendarDate) => void;
-  onNext: () => void;
-  onPrev: () => void;
-  isLoading?: boolean;
+  title: string
+  calendarWeeks: CalendarWeek[]
+  onSelectAvailable: (date: CalendarDate) => void
+  onNext: () => void
+  onPrev: () => void
+  isLoading?: boolean
 }
 
 function CalendarSkeleton() {
@@ -60,7 +60,7 @@ function CalendarSkeleton() {
                     <td className="box-border p-1" key={`${i}-${j}`}>
                       <SkeletonBase className="w-[1.875rem] h-[1.875rem] aspect-square rounded-full " />
                     </td>
-                  );
+                  )
                 })}
               </tr>
             ))}
@@ -68,7 +68,7 @@ function CalendarSkeleton() {
         </thead>
       </table>
     </div>
-  );
+  )
 }
 
 export function Calendar({
@@ -79,7 +79,7 @@ export function Calendar({
   onPrev,
   isLoading = false,
 }: CalendarProps) {
-  if (isLoading) return <CalendarSkeleton />;
+  if (isLoading) return <CalendarSkeleton />
   return (
     <div className="flex flex-col gap-2">
       <div className="grid grid-cols-[4fr_1fr]">
@@ -163,7 +163,7 @@ export function Calendar({
                         )}
                       </button>
                     </td>
-                  );
+                  )
                 })}
               </tr>
             ))}
@@ -177,5 +177,5 @@ export function Calendar({
         </div>
       )}
     </div>
-  );
+  )
 }

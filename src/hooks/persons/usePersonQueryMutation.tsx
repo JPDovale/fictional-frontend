@@ -1,64 +1,59 @@
-import { Requester } from '@infra/requester/requester';
-import { Accessors } from '@infra/requester/types';
-import { UpdatePersonBody } from '@modules/persons/gateways/UpdatePerson.gateway';
-import { AttributePreviewResponse } from '@modules/persons/presenters/AttributesPreview.presenter';
-import { PersonWithDetailsResponse } from '@modules/persons/presenters/PersonWithDetails.presenter';
-import { useToast } from '@rComponents/ui/use-toast';
-import { LocalStorageKeys } from '@rConfigs/localstorageKeys';
-import { useUser } from '@rHooks/useUser';
-import localstorageFunctions from '@rUtils/localstorageFunctions';
-import { Optional } from '@shared/core/types/Optional';
-import { StatusCode } from '@shared/core/types/StatusCode';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/components/ui/use-toast'
+import { LocalStorageKeys } from '@/configs/localstorageKeys'
+import { AttributePreview } from '@/services/persons/getAttributesPreviweRequest'
+import { Person } from '@/services/persons/getPersonRequest'
+import {
+  UpdatePersonReq,
+  updatePersonRequest,
+} from '@/services/persons/updatePersonRequest'
+import { Optional } from '@/shared/types/types/Optional'
+import { StatusCode } from '@/shared/types/types/StatusCode'
+import localstorageFunctions from '@/utils/localstorageFunctions'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface UsePersonQueryMutationProps {
-  projectId?: string;
-  personId?: string;
+  projectId?: string
+  personId?: string
 }
 
 interface PersonQueryData {
-  person: PersonWithDetailsResponse | null;
-  attributesThisPerson: AttributePreviewResponse[];
+  person: Person | null
+  attributesThisPerson: AttributePreview[]
 }
 
 export function usePersonQueryMutation({
   projectId,
   personId,
 }: UsePersonQueryMutationProps) {
-  const { user } = useUser();
-  const { toast } = useToast();
+  const { toast } = useToast()
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   const { mutateAsync: updatePerson } = useMutation<
     void,
     Error,
-    Optional<UpdatePersonBody, 'userId' | 'personId' | 'projectId'>
+    Optional<UpdatePersonReq, 'personId' | 'projectId'>
   >({
     mutationFn: async (variables) => {
-      if (!user?.id || !projectId || !personId) return;
+      if (!projectId || !personId) return
 
-      const response = await Requester.requester<UpdatePersonBody>({
-        access: Accessors.UPDATE_PERSON,
-        data: {
-          projectId,
-          personId,
-          userId: user?.id ?? '',
-          ...variables,
-        },
-      });
+      const response = await updatePersonRequest({
+        personId,
+        projectId,
+        ...variables,
+      })
 
       if (response.status !== StatusCode.OK) {
         toast({
           title: response.title,
           description: response.message,
           variant: 'destructive',
-        });
+        })
       }
     },
     onSuccess: (
       _,
-      { name, history, type, image, birthDate, deathDate, fatherId, motherId }
+      { name, history, type, image, birthDate, deathDate, fatherId, motherId },
     ) => {
       queryClient.setQueryData(
         [`projects:${projectId}:persons:${personId}`],
@@ -88,20 +83,20 @@ export function usePersonQueryMutation({
                 motherId === undefined ? cachedData.person?.motherId : motherId,
             },
             attributesThisPerson: cachedData.attributesThisPerson,
-          };
-        }
-      );
+          }
+        },
+      )
     },
-  });
+  })
 
   function getTempPersistenceKey() {
-    return `${LocalStorageKeys.EDITOR_TEMP_PERSISTENCE}:projects:${projectId}:persons:${personId}` as LocalStorageKeys;
+    return `${LocalStorageKeys.EDITOR_TEMP_PERSISTENCE}:projects:${projectId}:persons:${personId}` as LocalStorageKeys
   }
 
   function getTempPersistence() {
-    const value = localstorageFunctions.Get<string>(getTempPersistenceKey());
-    return value ?? '';
+    const value = localstorageFunctions.Get<string>(getTempPersistenceKey())
+    return value ?? ''
   }
 
-  return { updatePerson, getTempPersistence, getTempPersistenceKey };
+  return { updatePerson, getTempPersistence, getTempPersistenceKey }
 }

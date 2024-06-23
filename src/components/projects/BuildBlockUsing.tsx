@@ -1,7 +1,9 @@
-import { BuildBlock } from '@modules/projects/valueObjects/BuildBlocks'
-import { useBuildBlocks } from '@rHooks/useBuildBlocks'
-import { useTheme } from '@rHooks/useTheme'
-import { Theme } from '@rStores/useInterfaceStore'
+import { useBuildBlocks } from '@/hooks/useBuildBlocks'
+import { useProject } from '@/hooks/useProject'
+import { useTheme } from '@/hooks/useTheme'
+import { BuildBlock } from '@/services/projects/getProjectsRequest'
+import { Theme } from '@/styles/theme'
+import { useParams } from 'next/navigation'
 import { tv } from 'tailwind-variants'
 
 const buildBlockUsingStyles = tv({
@@ -20,8 +22,12 @@ interface BuildBlockUsingProps {
 }
 
 export function BuildBlockUsing({ buildBlock }: BuildBlockUsingProps) {
+  const { projectID } = useParams()
+  const projectId = projectID as string
+
   const { theme } = useTheme()
-  const { getIcon, getName } = useBuildBlocks()
+  const { project } = useProject({ projectId })
+  const { getIcon, getName } = useBuildBlocks(project?.buildBlocks)
 
   const Icon = getIcon(buildBlock)
   const name = getName(buildBlock)

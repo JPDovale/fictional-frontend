@@ -1,10 +1,12 @@
-import { Link, useLocation } from 'react-router-dom';
-import { VariantProps, tv } from 'tailwind-variants';
-import { Theme } from '@rStores/useInterfaceStore';
-import { useTheme } from '@rHooks/useTheme';
-import { Button } from '../Button';
-import { NavigationLink } from '.';
-import { ScrollArea } from '../ScrollArea';
+'use client'
+import { VariantProps, tv } from 'tailwind-variants'
+import { Button } from '../Button'
+import { NavigationLink } from '.'
+import { ScrollArea } from '../ScrollArea'
+import { useTheme } from '@/hooks/useTheme'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { Theme } from '@/styles/theme'
 
 const navigatorStyles = tv({
   base: 'flex gap-3 h-full p-2',
@@ -17,17 +19,17 @@ const navigatorStyles = tv({
   defaultVariants: {
     direction: 'column',
   },
-});
+})
 
 interface NavigationNavigatorProps
   extends VariantProps<typeof navigatorStyles> {
-  links: NavigationLink[];
-  navIsOpen?: boolean;
+  links: NavigationLink[]
+  navIsOpen?: boolean
 }
 
 function Nav({ direction, links, navIsOpen }: NavigationNavigatorProps) {
-  const { theme } = useTheme();
-  const { pathname } = useLocation();
+  const { theme } = useTheme()
+  const pathname = usePathname()
   return (
     <nav>
       <ul className={navigatorStyles({ direction })}>
@@ -42,7 +44,7 @@ function Nav({ direction, links, navIsOpen }: NavigationNavigatorProps) {
               align={navIsOpen ? 'start' : 'center'}
               asChild
             >
-              <Link to={link.pathname}>
+              <Link href={link.pathname}>
                 <Button.Icon
                   className={
                     direction === 'row' && theme === Theme.LIGHT
@@ -62,7 +64,7 @@ function Nav({ direction, links, navIsOpen }: NavigationNavigatorProps) {
         ))}
       </ul>
     </nav>
-  );
+  )
 }
 
 export function Navigator({
@@ -71,13 +73,13 @@ export function Navigator({
   links,
 }: NavigationNavigatorProps) {
   if (direction === 'row')
-    return <Nav links={links} navIsOpen={navIsOpen} direction={direction} />;
+    return <Nav links={links} navIsOpen={navIsOpen} direction={direction} />
 
   return (
     <ScrollArea>
       <Nav links={links} direction={direction} navIsOpen={navIsOpen} />
     </ScrollArea>
-  );
+  )
 }
 
-Navigator.displayName = 'Navigation.Navigator';
+Navigator.displayName = 'Navigation.Navigator'

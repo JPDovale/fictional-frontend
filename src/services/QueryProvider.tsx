@@ -1,4 +1,5 @@
 'use client'
+
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
@@ -11,7 +12,7 @@ const queryClient = new QueryClient()
 export function QueryProvider({ children }: QueryProviderProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <div>{children}</div>
+      {children}
       <ReactQueryDevtools />
     </QueryClientProvider>
   )

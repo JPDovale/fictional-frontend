@@ -1,7 +1,8 @@
-import { useTheme } from '@rHooks/useTheme';
-import { Theme } from '@rStores/useInterfaceStore';
-import { HTMLAttributes } from 'react';
-import { VariantProps, tv } from 'tailwind-variants';
+'use client'
+import { useTheme } from '@/hooks/useTheme'
+import { Theme } from '@/styles/theme'
+import { HTMLAttributes } from 'react'
+import { VariantProps, tv } from 'tailwind-variants'
 
 export const rootStyles = tv({
   base: 'flex h-screen border-r-[1px]  ',
@@ -27,12 +28,12 @@ export const rootStyles = tv({
     navIsOpen: true,
     direction: 'column',
   },
-});
+})
 
 interface NavigationRootProps
   extends HTMLAttributes<HTMLElement>,
     VariantProps<typeof rootStyles> {
-  navIsOpen?: boolean;
+  navIsOpen?: boolean
 }
 
 export function Root({
@@ -41,13 +42,13 @@ export function Root({
   className,
   ...props
 }: NavigationRootProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
   return (
     <aside
       className={rootStyles({ navIsOpen, theme, direction, className })}
       {...props}
     />
-  );
+  )
 }
 
-Root.displayName = 'Navigation.Root';
+Root.displayName = 'Navigation.Root'

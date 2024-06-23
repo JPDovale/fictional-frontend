@@ -1,4 +1,4 @@
-import { useInterfaceStore } from '@rStores/useInterfaceStore'
+import { useInterfaceStore } from '@/stores/useInterfaceStore'
 
 export function useFolderTree() {
   const { setNodeIdSelected, nodeIdSelected } = useInterfaceStore((state) => ({

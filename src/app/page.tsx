@@ -1,3 +1,14 @@
+'use client'
+import { Loading } from '@/components/application/Loading'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+
 export default function Home() {
-  return <h1>Hello world</h1>
+  const navigation = useRouter()
+
+  useEffect(() => {
+    navigation.push('/projects')
+  }, [navigation])
+
+  return <Loading />
 }

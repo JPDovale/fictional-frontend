@@ -1,5 +1,7 @@
-import { useTheme } from '@rHooks/useTheme'
-import { Theme } from '@rStores/useInterfaceStore'
+'use client'
+import ImageNext from 'next/image'
+import { useTheme } from '@/hooks/useTheme'
+import { Theme } from '@/styles/theme'
 import { ImgHTMLAttributes } from 'react'
 import { tv } from 'tailwind-variants'
 
@@ -20,9 +22,12 @@ export function Image({ ...props }: ImageProps) {
   const { theme } = useTheme()
   return (
     <div className="relative">
-      <img
+      <ImageNext
         alt=""
+        src=""
         {...props}
+        height={400}
+        width={400}
         data-has-src={!!props.src}
         className="max-h-40 w-full min-h-40 h-40 object-cover data-[has-src=false]:opacity-0"
       />

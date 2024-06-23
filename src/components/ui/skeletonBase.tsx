@@ -1,21 +1,21 @@
-import { useTheme } from '@rHooks/useTheme';
-import { cn } from 'src/renderer/utils/cn';
+import { useTheme } from '@/hooks/useTheme'
+import { cn } from '@/utils/cn'
 
 function SkeletonBase({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
   return (
     <div
       data-theme={theme}
       className={cn(
         'animate-pulse data-[theme=dark]:bg-gray900/10 bg-gray100/10',
-        className
+        className,
       )}
       {...props}
     />
-  );
+  )
 }
 
-export { SkeletonBase };
+export { SkeletonBase }

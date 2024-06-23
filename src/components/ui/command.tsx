@@ -1,13 +1,14 @@
+'use client'
 import * as React from 'react'
 import { type DialogProps } from '@radix-ui/react-dialog'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { Command as CommandPrimitive } from 'cmdk'
 
-import { cn } from 'src/renderer/utils/cn'
-import { Dialog, DialogContent } from 'src/renderer/components/ui/dialog'
 import { tv } from 'tailwind-variants'
-import { Theme } from '@rStores/useInterfaceStore'
-import { useTheme } from '@rHooks/useTheme'
+import { cn } from '@/utils/cn'
+import { Dialog, DialogContent } from './dialog'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -42,7 +43,7 @@ const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+  <div className="flex items-center border-b px-3">
     <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
@@ -89,9 +90,9 @@ const commandGroupStyles = tv({
     theme: {
       [Theme.DARK]: 'bg-gray200',
       [Theme.LIGHT]: '',
-      [Theme.SYSTEM]: ''
-    }
-  }
+      [Theme.SYSTEM]: '',
+    },
+  },
 })
 
 const CommandGroup = React.forwardRef<
@@ -105,7 +106,7 @@ const CommandGroup = React.forwardRef<
       ref={ref}
       className={commandGroupStyles({
         className,
-        theme
+        theme,
       })}
       {...props}
     />
@@ -132,9 +133,9 @@ const commandItemStyles = tv({
     theme: {
       [Theme.DARK]: 'aria-selected:bg-gray400 text-text100 ',
       [Theme.LIGHT]: '',
-      [Theme.SYSTEM]: ''
-    }
-  }
+      [Theme.SYSTEM]: '',
+    },
+  },
 })
 
 const CommandItem = React.forwardRef<
@@ -148,7 +149,7 @@ const CommandItem = React.forwardRef<
       ref={ref}
       className={commandItemStyles({
         className,
-        theme
+        theme,
       })}
       {...props}
     />

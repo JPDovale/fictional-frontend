@@ -1,3 +1,8 @@
+import { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
+import { twMerge } from 'tailwind-merge'
+import { Trash } from 'lucide-react'
+import { useTheme } from '@/hooks/useTheme'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -5,12 +10,8 @@ import {
   ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from '@rComponents/ui/context-menu'
-import { useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { twMerge } from 'tailwind-merge'
-import { Trash } from 'lucide-react'
-import { useTheme } from '@rHooks/useTheme'
+} from '../ui/context-menu'
+import Image from 'next/image'
 
 interface DropZoneProps {
   className?: string
@@ -44,7 +45,7 @@ export function DropZone({
     onDrop: onDropFn,
     noClick: true,
     accept: {
-      'image/*': ['.png', '.jpg', '.jpeg'],
+      'image/*': ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'],
     },
   })
 
@@ -61,7 +62,9 @@ export function DropZone({
       {objectSelected && (
         <ContextMenu>
           <ContextMenuTrigger asChild>
-            <img
+            <Image
+              width={500}
+              height={500}
               data-is-active={isDragActive}
               className="absolute w-full h-full object-cover data-[is-active=true]:opacity-30"
               src={objectSelected}

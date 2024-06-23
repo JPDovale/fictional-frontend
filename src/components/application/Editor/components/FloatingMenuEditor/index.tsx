@@ -1,17 +1,13 @@
-import { FloatingMenu, Editor } from '@tiptap/react';
-import { RxText } from 'react-icons/rx';
-import { Heading1, Heading2, Heading3, Heading4, List } from 'lucide-react';
-import * as State from '@tiptap/pm/state';
-import { tv } from 'tailwind-variants';
-import { Theme } from '@rStores/useInterfaceStore';
-import { useTheme } from '@rHooks/useTheme';
-import { MenuOption } from './MenuOption';
-import { ReactNode } from 'react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverPortal,
-} from '@rComponents/ui/popover';
+import { FloatingMenu, Editor } from '@tiptap/react'
+import { RxText } from 'react-icons/rx'
+import { Heading1, Heading2, Heading3, Heading4, List } from 'lucide-react'
+import * as State from '@tiptap/pm/state'
+import { tv } from 'tailwind-variants'
+import { MenuOption } from './MenuOption'
+import { ReactNode } from 'react'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
+import { Popover, PopoverContent, PopoverPortal } from '@/components/ui/popover'
 
 export const floatingMenuStyles = tv({
   base: 'shadow-lg border shadow-semiTransparentBack rounded-md overflow-hidden flex flex-col p-2 gap-1',
@@ -22,75 +18,73 @@ export const floatingMenuStyles = tv({
       [Theme.SYSTEM]: '',
     },
   },
-});
+})
 
 export interface EditorMenuOption {
-  icon: ReactNode;
-  title: string;
-  description: string;
-  handler: () => void;
+  icon: ReactNode
+  title: string
+  description: string
+  handler: () => void
 }
 
 interface FloatingMenuEditorProps {
-  editor: Editor | null;
-  menuOptions: EditorMenuOption[];
+  editor: Editor | null
+  menuOptions: EditorMenuOption[]
 }
 
 interface ItShouldShowProps {
-  state: State.EditorState;
+  state: State.EditorState
 }
 
 export function FloatingMenuEditor({
   editor,
   menuOptions = [],
 }: FloatingMenuEditorProps) {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
-  if (!editor) return null;
+  if (!editor) return null
 
   function itShouldShow({ state }: ItShouldShowProps): boolean {
-    const { $from } = state.selection;
-    const currentLineText = $from.nodeBefore?.textContent;
+    const { $from } = state.selection
+    const currentLineText = $from.nodeBefore?.textContent
 
-    return (
-      currentLineText === '/' && $from.nodeAfter?.textContent === undefined
-    );
+    return currentLineText === '/' && $from.nodeAfter?.textContent === undefined
   }
 
   function removeBackSlash() {
-    if (!editor) return;
+    if (!editor) return
 
     editor
       .chain()
       .focus()
       .command(({ tr, editor: edt }) => {
-        const { doc } = edt.state;
-        const newDoc = doc.toJSON();
+        const { doc } = edt.state
+        const newDoc = doc.toJSON()
 
         function removeBackSlashsFromText(node: any) {
           if (node.content) {
             node.content = node.content.filter(
-              (n: any) => !(n.type === 'text' && n.text === '/')
-            );
+              (n: any) => !(n.type === 'text' && n.text === '/'),
+            )
 
-            node.content.forEach(removeBackSlashsFromText);
+            node.content.forEach(removeBackSlashsFromText)
             if (node.content.length === 0) {
-              const { content: _, ...rest } = node;
-              node = { ...rest };
+              const { content: _, ...rest } = node
+              node = { ...rest }
             }
           }
         }
 
-        removeBackSlashsFromText(newDoc);
+        removeBackSlashsFromText(newDoc)
 
-        const newState = editor.schema.nodeFromJSON(newDoc);
-        tr.replaceWith(0, doc.nodeSize - 2, newState);
-        return true;
+        const newState = editor.schema.nodeFromJSON(newDoc)
+        tr.replaceWith(0, doc.nodeSize - 2, newState)
+        return true
       })
-      .run();
+      .run()
   }
 
-  if (!editor) return null;
+  if (!editor) return null
 
   return (
     <Popover open>
@@ -112,8 +106,8 @@ export function FloatingMenuEditor({
                     key={option.title}
                     {...option}
                     handler={() => {
-                      option.handler();
-                      removeBackSlash();
+                      option.handler()
+                      removeBackSlash()
                     }}
                   />
                 ))}
@@ -125,8 +119,8 @@ export function FloatingMenuEditor({
               description="Comece com um texto simples"
               icon={<RxText className="w-10 h-10 p-2" />}
               handler={() => {
-                editor.chain().focus().setParagraph().run();
-                removeBackSlash();
+                editor.chain().focus().setParagraph().run()
+                removeBackSlash()
               }}
             />
 
@@ -135,8 +129,8 @@ export function FloatingMenuEditor({
               description="Insira um bloco de titulo primário"
               icon={<Heading1 className="w-10 h-10 p-2" />}
               handler={() => {
-                editor.chain().focus().toggleHeading({ level: 1 }).run();
-                removeBackSlash();
+                editor.chain().focus().toggleHeading({ level: 1 }).run()
+                removeBackSlash()
               }}
             />
 
@@ -145,8 +139,8 @@ export function FloatingMenuEditor({
               description="Insira um bloco de titulo secundário"
               icon={<Heading2 className="w-10 h-10 p-2" />}
               handler={() => {
-                editor.chain().focus().toggleHeading({ level: 2 }).run();
-                removeBackSlash();
+                editor.chain().focus().toggleHeading({ level: 2 }).run()
+                removeBackSlash()
               }}
             />
 
@@ -155,8 +149,8 @@ export function FloatingMenuEditor({
               description="Insira um bloco de titulo terciário"
               icon={<Heading3 className="w-10 h-10 p-2" />}
               handler={() => {
-                editor.chain().focus().toggleHeading({ level: 3 }).run();
-                removeBackSlash();
+                editor.chain().focus().toggleHeading({ level: 3 }).run()
+                removeBackSlash()
               }}
             />
 
@@ -165,8 +159,8 @@ export function FloatingMenuEditor({
               description="Insira um bloco de titulo pequeno"
               icon={<Heading4 className="w-10 h-10 p-2" />}
               handler={() => {
-                editor.chain().focus().toggleHeading({ level: 4 }).run();
-                removeBackSlash();
+                editor.chain().focus().toggleHeading({ level: 4 }).run()
+                removeBackSlash()
               }}
             />
 
@@ -175,13 +169,13 @@ export function FloatingMenuEditor({
               description="Insira uma lista numerada"
               icon={<List className="w-10 h-10 p-2" />}
               handler={() => {
-                editor.chain().focus().toggleOrderedList().run();
-                removeBackSlash();
+                editor.chain().focus().toggleOrderedList().run()
+                removeBackSlash()
               }}
             />
           </FloatingMenu>
         </PopoverContent>
       </PopoverPortal>
     </Popover>
-  );
+  )
 }

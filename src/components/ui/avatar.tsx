@@ -1,10 +1,11 @@
+'use client'
 import * as React from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 
-import { cn } from 'src/renderer/utils/cn'
 import { tv } from 'tailwind-variants'
-import { Theme } from '@rStores/useInterfaceStore'
-import { useTheme } from '@rHooks/useTheme'
+import { cn } from '@/utils/cn'
+import { Theme } from '@/styles/theme'
+import { useTheme } from '@/hooks/useTheme'
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,

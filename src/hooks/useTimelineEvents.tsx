@@ -1,4 +1,4 @@
-import { EventResponse } from '@modules/timelines/presenters/TimelineWithEvents.presenter';
+import { Event } from '@/services/timelines/getTimelineRequest'
 
 const monthMapper = {
   1: 'Janeiro',
@@ -13,128 +13,128 @@ const monthMapper = {
   10: 'Outubro',
   11: 'Novembro',
   12: 'Dezembro',
-} as { [x: number]: string };
+} as { [x: number]: string }
 
 interface UseTimelineEventsProps {
-  events: EventResponse[];
+  events: Event[]
 }
 
-function compareEvents(a: EventResponse, b: EventResponse) {
+function compareEvents(a: Event, b: Event) {
   if (a.dateObject.period !== b.dateObject.period) {
-    return a.dateObject.period - b.dateObject.period;
+    return a.dateObject.period - b.dateObject.period
   }
 
   if (a.dateObject.period === -1) {
     if (a.dateObject.year !== b.dateObject.year) {
-      return b.dateObject.year - a.dateObject.year;
+      return b.dateObject.year - a.dateObject.year
     }
   } else {
     if (a.dateObject.year !== b.dateObject.year) {
-      return a.dateObject.year - b.dateObject.year;
+      return a.dateObject.year - b.dateObject.year
     }
   }
 
   if (a.dateObject.month !== b.dateObject.month) {
-    return a.dateObject.month - b.dateObject.month;
+    return a.dateObject.month - b.dateObject.month
   }
 
   if (a.dateObject.day !== b.dateObject.day) {
-    return a.dateObject.day - b.dateObject.day;
+    return a.dateObject.day - b.dateObject.day
   }
 
   if (a.dateObject.hour !== b.dateObject.hour) {
-    return a.dateObject.hour - b.dateObject.hour;
+    return a.dateObject.hour - b.dateObject.hour
   }
 
   if (a.dateObject.minute !== b.dateObject.minute) {
-    return a.dateObject.minute - b.dateObject.minute;
+    return a.dateObject.minute - b.dateObject.minute
   }
 
   if (a.dateObject.second !== b.dateObject.second) {
-    return a.dateObject.second - b.dateObject.second;
+    return a.dateObject.second - b.dateObject.second
   }
 
-  return 0;
+  return 0
 }
 
 export function useTimelineEvents({ events }: UseTimelineEventsProps) {
-  const datesInCronologicalOrder = events.sort(compareEvents);
+  const datesInCronologicalOrder = events.sort(compareEvents)
 
   const grouped: {
     [y: string]: {
-      yearName: string;
+      yearName: string
       months: {
-        monthName: string;
+        monthName: string
         days: {
-          day: number;
-          dayString: string;
-          events: EventResponse[];
-        }[];
-      }[];
-    };
-  } = {};
+          day: number
+          dayString: string
+          events: Event[]
+        }[]
+      }[]
+    }
+  } = {}
 
   datesInCronologicalOrder.forEach((e) => {
     const {
       dateObject: { year, month, day, period },
-    } = e;
+    } = e
 
-    const yearString = (year * (period === -1 ? -1 : 1)).toString();
+    const yearString = (year * (period === -1 ? -1 : 1)).toString()
 
     if (!grouped[yearString]) {
       grouped[yearString] = {
         yearName: `${year} Anos ${period === -1 ? 'A.C.' : 'D.C.'}`,
         months: [],
-      };
+      }
     }
 
-    let yearGroup = grouped[yearString];
+    const yearGroup = grouped[yearString]
     let monthGroup = yearGroup.months.find(
-      (m) => m.monthName === monthMapper[month]
-    );
+      (m) => m.monthName === monthMapper[month],
+    )
 
     if (!monthGroup) {
       monthGroup = {
         monthName: monthMapper[month],
         days: [],
-      };
-      yearGroup.months.push(monthGroup);
+      }
+      yearGroup.months.push(monthGroup)
     }
 
-    let dayGroup = monthGroup.days.find((d) => d.day === day);
+    let dayGroup = monthGroup.days.find((d) => d.day === day)
 
     if (!dayGroup) {
       dayGroup = {
         day,
         dayString: `${day}:${month}:${year}:${period}`,
         events: [],
-      };
-      monthGroup.days.push(dayGroup);
+      }
+      monthGroup.days.push(dayGroup)
     }
 
-    const initOfDate = `${day}:${month}:${year}:${period}`;
+    const initOfDate = `${day}:${month}:${year}:${period}`
 
-    const eventsOfDate = events.filter((e) => e.date.includes(initOfDate));
+    const eventsOfDate = events.filter((e) => e.date.includes(initOfDate))
 
     eventsOfDate.forEach((e) => {
       if (!dayGroup.events.includes(e)) {
-        dayGroup.events.push(e);
+        dayGroup.events.push(e)
       }
-    });
-  });
+    })
+  })
 
   return {
     datesInCronologicalOrder,
     dates: Object.entries(grouped)
       .sort((a, b) => {
-        const [aYear] = a;
-        const [bYear] = b;
+        const [aYear] = a
+        const [bYear] = b
 
-        const aYearNumber = parseInt(aYear);
-        const bYearNumber = parseInt(bYear);
+        const aYearNumber = parseInt(aYear)
+        const bYearNumber = parseInt(bYear)
 
-        return aYearNumber - bYearNumber;
+        return aYearNumber - bYearNumber
       })
       .map((d) => ({ ...d[1] })),
-  };
+  }
 }
