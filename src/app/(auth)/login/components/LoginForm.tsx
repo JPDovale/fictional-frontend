@@ -18,7 +18,7 @@ const loginFormSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/,
+      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
       'Email inválido! Evite simbolos.',
     )
     .email('Email inválido'),
@@ -26,7 +26,7 @@ const loginFormSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/,
+      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
       'Senha inválida! Evite simbolos.',
     )
     .min(8, 'A senha deve ter pelo menos 8 caracteres')

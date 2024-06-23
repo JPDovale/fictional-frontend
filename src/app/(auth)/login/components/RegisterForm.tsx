@@ -15,7 +15,7 @@ const registerFormSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/,
+      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
       'Nome inválido! Evite simbolos.',
     )
     .min(3, 'O nome deve ter pelo menos 3 caracteres')
@@ -24,7 +24,7 @@ const registerFormSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/,
+      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
       'Email inválido! Evite simbolos.',
     )
     .email('Email inválido'),
@@ -32,7 +32,7 @@ const registerFormSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/,
+      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
       'Senha inválida! Evite simbolos.',
     )
     .min(8, 'A senha deve ter pelo menos 8 caracteres')
@@ -41,7 +41,7 @@ const registerFormSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/,
+      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
       'Senha inválida! Evite simbolos.',
     )
     .min(8, 'A senha deve ter pelo menos 8 caracteres')

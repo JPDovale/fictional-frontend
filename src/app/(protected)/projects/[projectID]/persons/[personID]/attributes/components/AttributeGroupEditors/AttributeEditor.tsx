@@ -70,7 +70,7 @@ export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
     }
 
     if (
-      !/^[a-zA-Z0-9\s._@-\u00C0-\u00FF\u0100-\u017F\u0180-\u024F]+$/.test(
+      !/^[a-zA-Z0-9\s._@\-À-ÿ]+$/.test(
         file.title,
       )
     ) {
