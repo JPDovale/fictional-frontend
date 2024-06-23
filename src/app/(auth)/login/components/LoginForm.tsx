@@ -17,18 +17,12 @@ const loginFormSchema = z.object({
   email: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Email inválido! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Email inválido! Evite simbolos.')
     .email('Email inválido'),
   password: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Senha inválida! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Senha inválida! Evite simbolos.')
     .min(8, 'A senha deve ter pelo menos 8 caracteres')
     .max(255, 'A senha deve ter no maximo 255 caracteres'),
 })

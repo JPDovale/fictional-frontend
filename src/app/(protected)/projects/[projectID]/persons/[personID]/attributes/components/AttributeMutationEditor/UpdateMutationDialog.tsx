@@ -59,10 +59,7 @@ const createMutationWithEventSchema = z.object({
   title: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Nome inválido! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Nome inválido! Evite simbolos.')
     .max(120, 'O título deve ter no maximo 120 caracteres')
     .nullable()
     .optional(),

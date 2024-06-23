@@ -26,10 +26,7 @@ const createPersonSchema = z.object({
   name: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Nome inválido! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Nome inválido! Evite simbolos.')
     .max(255, 'O nome deve ter no máximo 255 caracteres')
     .optional(),
   fatherId: z.string().trim().uuid().optional(),

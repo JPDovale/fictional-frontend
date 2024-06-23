@@ -14,36 +14,24 @@ const registerFormSchema = z.object({
   name: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Nome inválido! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Nome inválido! Evite simbolos.')
     .min(3, 'O nome deve ter pelo menos 3 caracteres')
     .max(255, 'O nome deve ter no maximo 255 caracteres'),
   email: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Email inválido! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Email inválido! Evite simbolos.')
     .email('Email inválido'),
   password: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Senha inválida! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Senha inválida! Evite simbolos.')
     .min(8, 'A senha deve ter pelo menos 8 caracteres')
     .max(255, 'A senha deve ter no maximo 255 caracteres'),
   confirmPassword: z
     .string()
     .trim()
-    .regex(
-      /^[a-zA-Z0-9\s._@\-À-ÿ]+$/,
-      'Senha inválida! Evite simbolos.',
-    )
+    .regex(/^[a-zA-Z0-9\s._@\-À-ÿ]+$/, 'Senha inválida! Evite simbolos.')
     .min(8, 'A senha deve ter pelo menos 8 caracteres')
     .max(255, 'A senha deve ter no maximo 255 caracteres'),
 })
