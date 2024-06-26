@@ -114,6 +114,7 @@ export function FloatingMenuEditor({
                 <div className="w-full h-px bg-gray400"></div>
               </>
             )}
+
             <MenuOption
               title="Texto"
               description="Comece com um texto simples"

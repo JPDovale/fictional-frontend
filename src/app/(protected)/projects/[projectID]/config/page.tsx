@@ -52,7 +52,7 @@ export default function ProjectConfigPage() {
         </InfoBlock.Body>
       </InfoBlock.Root>
 
-      <InfoBlock.Root className="border-fullError mt-12">
+      <InfoBlock.Root className="border-fullError mt-12" id="trash">
         <InfoBlock.Header>
           <InfoBlock.Title className="text-fullError">
             Zona de risco

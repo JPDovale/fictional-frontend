@@ -1,50 +1,32 @@
+'use client'
+
 import { BlockEditor } from '@/components/application/BlockEditor'
-import { Button } from '@/components/application/Button'
-import { EditorMenuOption } from '@/components/application/Editor/components/FloatingMenuEditor'
 import { SkeletonBase } from '@/components/ui/skeletonBase'
 import { useToast } from '@/components/ui/use-toast'
+import { usePersons } from '@/hooks/persons/usePersons'
 import { useEditor } from '@/hooks/useEditor'
-import { useProject } from '@/hooks/useProject'
+import { useFile } from '@/hooks/useFile'
+import { useFolders } from '@/hooks/useFolders'
+import { useParams } from '@/hooks/useParams'
 import { updateFileRequest } from '@/services/files/updateFileRequest'
 import { StatusCode } from '@/shared/types/types/StatusCode'
-import { Trash } from 'lucide-react'
-import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-interface AttributeEditorProps {
-  menuOptions: EditorMenuOption[]
-}
-
-export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
+export default function FilePage() {
   const [title, setTitle] = useState('')
 
-  const { attributeID, projectID, personID } = useParams()
-  const attributeId = attributeID as string
-  const projectId = projectID as string
-  const personId = personID as string
+  const { projectId, fileId } = useParams()
 
   const { toast } = useToast()
-  const {
-    usePersonsAttributes,
-    usePersons,
-    useFile,
-    usePerson,
-    useDeletingPersonAttribute,
-  } = useProject({
-    projectId,
-  })
-  const { setDeletingPersonAttribute } = useDeletingPersonAttribute()
-  const { persons } = usePersons()
-  const { refetchPerson, useAttribute } = usePerson({ personId })
-  const { refetchAttributes } = usePersonsAttributes()
-  const { attribute } = useAttribute({ attributeId })
+  const { persons } = usePersons({ projectId })
+  const { refetchFolders } = useFolders()
   const {
     file,
     getTempPersistenceKey,
     refetchFile,
     isLoadingFile,
     updateFile,
-  } = useFile({ fileId: attribute?.fileId })
+  } = useFile({ fileId, projectId })
 
   const { editor } = useEditor({
     preValueKey: getTempPersistenceKey(),
@@ -58,8 +40,6 @@ export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
     if (file.content === value) return
 
     await updateFile({ content: value })
-    await refetchAttributes()
-    refetchPerson()
   }
 
   async function handleSave() {
@@ -92,9 +72,8 @@ export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
     }
 
     if (response.status === StatusCode.OK) {
-      refetchAttributes()
       refetchFile()
-      refetchPerson()
+      refetchFolders()
     }
   }
 
@@ -111,7 +90,7 @@ export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
     )
 
   return (
-    <>
+    <main className="flex flex-col max-w-3xl w-full mx-auto -mt-24 py-4">
       {isLoadingFile && (
         <SkeletonBase className="mb-4 w-64 h-10 rounded-full" />
       )}
@@ -124,24 +103,10 @@ export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
             onChange={(e) => setTitle(e.target.value)}
             onBlur={() => handleSave()}
           />
-
-          <Button.Root
-            onClick={() => setDeletingPersonAttribute(attribute!.id)}
-            className="shadow-none bg-fullError data-[disabled=false]:hover:bg-fullError/80"
-            size="xs"
-          >
-            <Button.Icon>
-              <Trash />
-            </Button.Icon>
-          </Button.Root>
         </div>
       )}
 
-      <BlockEditor
-        editor={editor}
-        menuOptions={menuOptions}
-        isLoading={isLoadingFile}
-      />
-    </>
+      <BlockEditor editor={editor} isLoading={isLoadingFile} />
+    </main>
   )
 }

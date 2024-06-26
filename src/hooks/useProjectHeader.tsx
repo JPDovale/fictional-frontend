@@ -14,13 +14,14 @@ export function useProjectHeader() {
   const [personId, setPersonId] = useState<string>('')
   const [attributeId, setAttributeId] = useState<string>('')
   const [timelineId, setTimelineId] = useState<string>('')
+  const [fileId, setFileId] = useState<string>('')
 
   const { project, usePerson, useFile, useTimeline } = useProject({
     projectId,
   })
   const { person, useAttribute } = usePerson({ personId })
   const { attribute } = useAttribute({ attributeId })
-  const { file } = useFile({ fileId: attribute?.fileId })
+  const { file } = useFile({ fileId: attribute?.fileId ?? fileId })
   const { timeline } = useTimeline({ timelineId })
 
   const pathname = usePathname()
@@ -56,6 +57,7 @@ export function useProjectHeader() {
       edit: 'Editar',
       'build-blocks': 'Bloco de construção',
       attributes: 'Atributos',
+      files: 'Arquivos',
     }
 
     const uuidsPathsMapper: { [x: string]: string } = {
@@ -74,6 +76,7 @@ export function useProjectHeader() {
       desires: file?.title ?? '',
       habits: file?.title ?? '',
       timelines: timeline?.name ?? '',
+      files: file?.title ?? '',
     }
 
     function makePath(rawPath: string, rawPaths: string[], index: number) {
@@ -93,6 +96,10 @@ export function useProjectHeader() {
 
       if (previousRawPath === 'persons') {
         setPersonId(rawPath)
+      }
+
+      if (previousRawPath === 'files') {
+        setFileId(rawPath)
       }
 
       const prevForFile = [

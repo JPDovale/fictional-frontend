@@ -257,9 +257,9 @@ export default function ProjectNewPersonPage() {
         className="flex flex-col bg-gray100/30 data-[theme=light]:bg-gray900/30 relative shadow-2xl backdrop-blur-sm rounded-lg gap-4 p-4"
         onSubmit={handleSubmit(handleCreatePerson, onErrors)}
       >
-        <span className="text-xs absolute top-2 font-bold opacity-60 right-4">
-          Apenas o tipo é obrigatório
-        </span>
+        {/* <span className="text-xs absolute top-2 font-bold opacity-60 right-4"> */}
+        {/*   Apenas o tipo é obrigatório */}
+        {/* </span> */}
 
         <div className="flex items-center gap-8">
           <Input.Root className="h-full">

@@ -1,6 +1,7 @@
 'use client'
 import { NotFound } from '@/components/application/NotFound'
-import { attributeTypeNameMapper } from '@/configs/projectFolderTree/persons'
+import { attributesTypeMapper } from '@/configs/mappers/persons/attributesType'
+import { useMapper } from '@/hooks/useMapper'
 import { useProject } from '@/hooks/useProject'
 import { useTheme } from '@/hooks/useTheme'
 import { PersonType } from '@/services/persons/getPersonRequest'
@@ -22,6 +23,7 @@ const personTypeTargetMapper = {
 export default function ProjectPage() {
   const { projectID } = useParams()
   const projectId = projectID as string
+  const mapperAttributeType = useMapper(attributesTypeMapper)
 
   const {
     project,
@@ -45,7 +47,7 @@ export default function ProjectPage() {
     })),
     ...attributes.map((a) => ({
       id: a.id,
-      label: `${attributeTypeNameMapper[a.type]} - ${a.file.title}`,
+      label: `${mapperAttributeType.getTranslation(a.type)} - ${a.file.title}`,
       color: graphBaseColor,
     })),
   ]

@@ -5,7 +5,8 @@ import { useToast } from '@/components/ui/use-toast'
 import { getPersonsRequest } from '@/services/persons/getPersonsRequest'
 import { StatusCode } from '@/shared/types/types/StatusCode'
 import { createPersonAttributeRequest } from '@/services/persons/createPersonAttributeRequest'
-import { attributeTypeNameMapper } from '@/configs/projectFolderTree/persons'
+import { useMapper } from '../useMapper'
+import { attributesTypeMapper } from '@/configs/mappers/persons/attributesType'
 
 interface UsePersonsProps {
   projectId?: string
@@ -18,6 +19,8 @@ export interface CreateAttributeForPersonProps {
 export function usePersons({ projectId }: UsePersonsProps) {
   const { toast } = useToast()
   const { refetchAttributes } = usePersonsAttributes({ projectId })
+
+  const mapperAttributesType = useMapper(attributesTypeMapper)
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: [`projects:${projectId}:persons`],
@@ -76,7 +79,7 @@ export function usePersons({ projectId }: UsePersonsProps) {
     if (response.status === StatusCode.CREATED) {
       toast({
         title: 'Atributo criado',
-        description: `${attributeTypeNameMapper[type]} criado(a) com sucesso!`,
+        description: `${mapperAttributesType.getTranslation(type)} criado(a) com sucesso!`,
       })
 
       refetchAttributes()

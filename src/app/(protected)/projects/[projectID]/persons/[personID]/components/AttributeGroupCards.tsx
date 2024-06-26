@@ -1,9 +1,11 @@
 import { useTheme } from '@/hooks/useTheme'
 import { AttributePreview } from '@/services/persons/getAttributesPreviweRequest'
+import { Icon } from '@phosphor-icons/react'
 import { LucideIcon } from 'lucide-react'
+import { IconType } from 'react-icons/lib'
 
 interface AttributeGroupCardsProps {
-  Icon: LucideIcon
+  Icon: LucideIcon | Icon | IconType
   title: string
   attributes: AttributePreview[]
 }

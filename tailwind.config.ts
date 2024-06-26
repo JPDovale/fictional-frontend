@@ -107,6 +107,7 @@ const config: Config = {
         subtitle: 'var(--font-cinzel)',
         body: 'var(--font-roboto)',
         heading: 'var(--font-uncial-antiqua)',
+        ligatures: 'var(--font-fira-code)',
       },
       fontSize: {
         xxs: '0.625rem',

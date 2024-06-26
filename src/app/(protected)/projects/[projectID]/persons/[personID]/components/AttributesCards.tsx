@@ -1,11 +1,9 @@
-import {
-  attributeIconsMapper,
-  attributeTypeNameMapper,
-} from '@/configs/projectFolderTree/persons'
 import { useProject } from '@/hooks/useProject'
 import { AttributeType } from '@/services/persons/getPersonAttributeRequest'
 import { useParams } from 'next/navigation'
 import { AttributeGroupCards } from './AttributeGroupCards'
+import { attributesTypeMapper } from '@/configs/mappers/persons/attributesType'
+import { useMapper } from '@/hooks/useMapper'
 
 export function AttributesCards() {
   const { projectID, personID } = useParams()
@@ -14,8 +12,9 @@ export function AttributesCards() {
 
   const { usePerson } = useProject({ projectId })
   const { person, attributesThisPerson } = usePerson({ personId })
+  const mapper = useMapper(attributesTypeMapper)
 
-  const attributeTypes = Object.keys(attributeTypeNameMapper) as AttributeType[]
+  const attributeTypes = Object.keys(attributesTypeMapper) as AttributeType[]
 
   if (!person) return null
 
@@ -26,8 +25,8 @@ export function AttributesCards() {
       {attributeTypes.map((type, i) => (
         <AttributeGroupCards
           key={`${type}-${i}`}
-          title={attributeTypeNameMapper[type]}
-          Icon={attributeIconsMapper[type]}
+          title={mapper.getTranslation(type)}
+          Icon={mapper.getIcon(type)!}
           attributes={attributesThisPerson.filter((attr) => attr.type === type)}
         />
       ))}

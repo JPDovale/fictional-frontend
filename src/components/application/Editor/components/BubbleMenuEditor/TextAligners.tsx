@@ -1,6 +1,7 @@
 import {
   RxFontBold,
   RxFontItalic,
+  RxLink1,
   RxQuote,
   RxStrikethrough,
 } from 'react-icons/rx'
@@ -9,6 +10,8 @@ import { tv } from 'tailwind-variants'
 import { BubbleOption } from './BubbleOption'
 import { Theme } from '@/styles/theme'
 import { useTheme } from '@/hooks/useTheme'
+import { useToast } from '@/components/ui/use-toast'
+import { z } from 'zod'
 
 const groupStyles = tv({
   base: 'flex border-r ',
@@ -27,6 +30,7 @@ interface TextAlignersProps {
 
 export function TextAligners({ editor }: TextAlignersProps) {
   const { theme } = useTheme()
+  const { toast } = useToast()
 
   return (
     <div className={groupStyles({ theme })}>
@@ -52,6 +56,38 @@ export function TextAligners({ editor }: TextAlignersProps) {
         icon={<RxQuote className="w-4 h-4" />}
         isActive={editor.isActive('blockquote')}
         handler={() => editor.chain().focus().toggleBlockquote().run()}
+      />
+
+      <BubbleOption
+        isActive={editor.isActive('link')}
+        icon={<RxLink1 className="w-4 h-4" />}
+        handler={() => {
+          const { state } = editor
+          const { from, to } = state.selection
+
+          const isLink = editor.isActive('link')
+
+          if (isLink) {
+            editor.chain().focus().unsetLink().run()
+            return
+          }
+
+          const textSelected = state.doc.textBetween(from, to, '')
+          const urlValidation = z.string().url()
+          const isValidUrl = urlValidation.safeParse(textSelected)
+
+          if (!isValidUrl.success) {
+            toast({
+              title: 'Invalid URL',
+              description:
+                'O link é inválido. Tente adicionar https:// na frente do texto',
+              variant: 'destructive',
+            })
+            return
+          }
+
+          editor.chain().focus().toggleLink({ href: textSelected }).run()
+        }}
       />
     </div>
   )

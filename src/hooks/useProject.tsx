@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query'
 import { useProjectHeader } from './useProjectHeader'
 import { useFoundation } from './useFoundation'
 import { usePersons } from './persons/usePersons'
-import { useProjectTreeFolder } from './useProjectTreeFolder'
 import { usePersonsAttributes } from './persons/usePersonsAttributes'
 import { useFile } from './useFile'
 import { usePerson } from './persons/usePerson'
@@ -95,7 +94,6 @@ export function useProject({ projectId }: UseProjectProps) {
     useHeader: useProjectHeader,
     useFoundation: () => useFoundation({ projectId }),
     usePersons: () => usePersons({ projectId }),
-    useTreeFolder: () => useProjectTreeFolder({ projectId }),
     usePersonsAttributes: () => usePersonsAttributes({ projectId }),
     useFile: ({ fileId }: { fileId?: string }) =>
       useFile({ fileId, projectId }),

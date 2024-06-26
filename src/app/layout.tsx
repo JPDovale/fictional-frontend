@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import {
   Cinzel,
   Cinzel_Decorative,
+  Fira_Code,
   Roboto,
   Uncial_Antiqua,
 } from 'next/font/google'
@@ -15,6 +16,12 @@ const roboto = Roboto({
   weight: ['400', '700'],
   preload: true,
   variable: '--font-roboto',
+})
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  preload: true,
+  variable: '--font-fira-code',
 })
 const uncialAntiqua = Uncial_Antiqua({
   subsets: ['latin'],
@@ -35,7 +42,7 @@ const cinzelDecorative = Cinzel_Decorative({
   variable: '--font-cinzel-decorative',
 })
 
-const fonts = [roboto, uncialAntiqua, cinzel, cinzelDecorative]
+const fonts = [roboto, uncialAntiqua, cinzel, cinzelDecorative, firaCode]
 
 export const metadata: Metadata = {
   title: 'Fictional',

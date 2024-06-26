@@ -6,6 +6,8 @@ import Typography from '@tiptap/extension-typography'
 import { ReactRenderer, useEditor as useTipTapEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Mention from '@tiptap/extension-mention'
+import Link from '@tiptap/extension-link'
+import FontFamily from '@tiptap/extension-font-family'
 import PlaceholderEditor from '@tiptap/extension-placeholder'
 import tippy, { Instance, Props } from 'tippy.js'
 import { SuggestionProps } from '@tiptap/suggestion'
@@ -42,6 +44,15 @@ export function useEditor({
       Color,
       TextStyle,
       Typography,
+      FontFamily.configure({
+        types: ['textStyle'],
+      }),
+      Link.configure({
+        protocols: ['https'],
+        HTMLAttributes: {
+          target: '_blank',
+        },
+      }),
       Mention.configure({
         HTMLAttributes: {
           class: 'mention',
