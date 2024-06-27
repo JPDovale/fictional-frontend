@@ -1,12 +1,16 @@
 import { useFolders } from '../useFolders'
-import { FileIcon, FolderIcon } from 'lucide-react'
+import { FileIcon, FolderIcon, Trash } from 'lucide-react'
 import { useBaseGroupActions } from './useBaseGroupActions'
 import { Folder } from '@/services/folders/getFoldersRequest'
 import { NodeTree } from '@/components/application/FolderTree/Node'
+import { useDeletingFolder } from '../useDeletingFolder'
+import { useDeletingFile } from '../useDeletingFile'
 
 export function useFoldersTreeFolder() {
   const { folders, createFolder, createFile, updateFolder, updateFile } =
     useFolders()
+  const { setDeletingFolder } = useDeletingFolder()
+  const { setDeletingFile } = useDeletingFile()
   const baseGroupActions = useBaseGroupActions()
 
   function makeFolderNode(folder: Folder): NodeTree {
@@ -43,6 +47,18 @@ export function useFoldersTreeFolder() {
                 action: () => 'input',
                 icon: FileIcon,
               },
+              {
+                label: 'Mover arquivo para a lixeira',
+                action: () => setDeletingFile(file.id),
+                icon: Trash,
+                type: 'danger',
+              },
+              {
+                label: 'Mover pasta para a lixeira',
+                action: () => setDeletingFolder(folder.id),
+                icon: Trash,
+                type: 'danger',
+              },
             ],
 
             icon: FileIcon,
@@ -66,6 +82,12 @@ export function useFoldersTreeFolder() {
           label: 'Renomear pasta',
           action: () => 'input',
           icon: FolderIcon,
+        },
+        {
+          label: 'Mover pasta para a lixeira',
+          action: () => setDeletingFolder(folder.id),
+          icon: Trash,
+          type: 'danger',
         },
       ],
     }

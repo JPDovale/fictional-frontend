@@ -5,17 +5,10 @@ import { NodeTree } from './Node'
 
 interface FolderTreeProps {
   nodes: NodeTree[]
-  nodeSelected: string
   title?: string
-  setNodeSelected: (node: string) => void
 }
 
-export function FolderTree({
-  nodes,
-  nodeSelected,
-  title = '',
-  setNodeSelected,
-}: FolderTreeProps) {
+export function FolderTree({ nodes, title = '' }: FolderTreeProps) {
   const { theme } = useTheme()
 
   return (
@@ -33,11 +26,7 @@ export function FolderTree({
           Explorador: {title}
         </span>
         <section className="ml-1">
-          <Tree
-            nodes={nodes}
-            nodeSelected={nodeSelected}
-            setNodeSelected={setNodeSelected}
-          />
+          <Tree nodes={nodes} />
         </section>
       </div>
     </div>

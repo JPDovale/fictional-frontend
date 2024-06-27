@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useToast } from '@/components/ui/use-toast'
 import { StatusCode } from '@/shared/types/types/StatusCode'
-import { getFoldersRequest } from '@/services/folders/getFoldersRequest'
+import { Folder, getFoldersRequest } from '@/services/folders/getFoldersRequest'
 import { useParams } from './useParams'
 import { createFolderRequest } from '@/services/folders/createFolderRequest'
 import { createFileRequest } from '@/services/files/createFileRequest'
@@ -18,6 +18,8 @@ export function useFolders() {
       if (!projectId) {
         return {
           folders: [],
+          foldersWithowtHierarchy: [],
+          filesWithowtHierarchy: [],
         }
       }
       const response = await getFoldersRequest({ projectId })
@@ -31,13 +33,30 @@ export function useFolders() {
       }
 
       if (response.status === StatusCode.OK && response.data) {
+        const folders = response.data.folders ?? []
+        const foldersWithowtHierarchy: Folder[] = []
+        const filesWithowtHierarchy: { id: string; title: string }[] = []
+
+        const entriesFolder = (folder: Folder) => {
+          foldersWithowtHierarchy.push(folder)
+          filesWithowtHierarchy.push(...(folder.files ?? []))
+
+          if (folder.childs) folder.childs.forEach(entriesFolder)
+        }
+
+        folders.forEach(entriesFolder)
+
         return {
-          folders: response.data.folders,
+          folders,
+          foldersWithowtHierarchy,
+          filesWithowtHierarchy,
         }
       }
 
       return {
         folders: [],
+        foldersWithowtHierarchy: [],
+        filesWithowtHierarchy: [],
       }
     },
     staleTime: 1000 * 60 * 5,
@@ -154,13 +173,19 @@ export function useFolders() {
     }
   }
 
+  const folders = data?.folders ?? []
+  const foldersWithowtHierarchy = data?.foldersWithowtHierarchy ?? []
+  const filesWithowtHierarchy = data?.filesWithowtHierarchy ?? []
+
   return {
-    folders: data?.folders ?? [],
+    folders,
+    foldersWithowtHierarchy,
+    filesWithowtHierarchy,
     createFolder,
     createFile,
     updateFolder,
     updateFile,
-    isLoading,
+    isLoadingFolders: isLoading,
     refetchFolders: refetch,
   }
 }

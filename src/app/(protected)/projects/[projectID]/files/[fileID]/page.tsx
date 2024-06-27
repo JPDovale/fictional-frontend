@@ -10,16 +10,20 @@ import { useFolders } from '@/hooks/useFolders'
 import { useParams } from '@/hooks/useParams'
 import { updateFileRequest } from '@/services/files/updateFileRequest'
 import { StatusCode } from '@/shared/types/types/StatusCode'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function FilePage() {
   const [title, setTitle] = useState('')
 
-  const { projectId, fileId } = useParams()
+  const navigate = useRouter()
 
+  const { projectId, fileId } = useParams()
   const { toast } = useToast()
   const { persons } = usePersons({ projectId })
-  const { refetchFolders } = useFolders()
+  const { refetchFolders, foldersWithowtHierarchy, isLoadingFolders } =
+    useFolders()
+
   const {
     file,
     getTempPersistenceKey,
@@ -80,6 +84,28 @@ export default function FilePage() {
   useEffect(() => {
     setTitle(file?.title ?? '')
   }, [file?.title])
+
+  useEffect(() => {
+    const folderOfFile = foldersWithowtHierarchy.find(
+      (folder) => folder.id === file?.folderId,
+    )
+
+    if (
+      file?.folderId &&
+      !folderOfFile &&
+      !isLoadingFile &&
+      !isLoadingFolders
+    ) {
+      navigate.push(`/projects/${projectId}`)
+    }
+  }, [
+    file?.folderId,
+    foldersWithowtHierarchy,
+    isLoadingFile,
+    isLoadingFolders,
+    navigate,
+    projectId,
+  ])
 
   if (!file && !isLoadingFile)
     return (

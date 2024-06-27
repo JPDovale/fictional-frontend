@@ -2,6 +2,8 @@
 
 import { FolderTree } from '@/components/application/FolderTree'
 import { Loading } from '@/components/application/Loading'
+import { DeletingFileModal } from '@/components/files/DeletingFileModal'
+import { DeletingFolderModal } from '@/components/folders/DeletingFolderModal'
 import { DeletingPersonAttributeModal } from '@/components/persons/DeletingPersonAttributeModal'
 import { DeletingPersonModal } from '@/components/persons/DeletingPersonModal'
 import {
@@ -10,8 +12,6 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { useProjectTreeFolder } from '@/hooks/projectTreeFolder/useProjectTreeFolder'
-import { useFolderTree } from '@/hooks/useFolderTree'
-import { useFolders } from '@/hooks/useFolders'
 import { useProject } from '@/hooks/useProject'
 import { useTheme } from '@/hooks/useTheme'
 import { Theme, mainStyles } from '@/styles/theme'
@@ -35,12 +35,10 @@ interface ProjectLayoutProps {
 }
 
 export default function ProjectLayout({ children }: ProjectLayoutProps) {
-  useFolders()
   const { theme } = useTheme()
   const { projectID } = useParams()
   const projectId = projectID as string
 
-  const { nodeIdSelected, setNodeIdSelected } = useFolderTree()
   const {
     isLoadingProject,
     project,
@@ -82,15 +80,12 @@ export default function ProjectLayout({ children }: ProjectLayoutProps) {
           defaultSize={15}
           className="animate-none transition-none"
         >
-          <FolderTree
-            nodes={projectTree}
-            title={project?.name}
-            nodeSelected={nodeIdSelected}
-            setNodeSelected={setNodeIdSelected}
-          />
+          <FolderTree nodes={projectTree} title={project?.name} />
 
           <DeletingPersonModal projectId={projectId} />
           <DeletingPersonAttributeModal projectId={projectId} />
+          <DeletingFolderModal />
+          <DeletingFileModal />
         </ResizablePanel>
 
         <ResizableHandle withHandle className="p-px" />

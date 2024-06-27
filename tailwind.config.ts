@@ -105,7 +105,8 @@ const config: Config = {
       fontFamily: {
         title: 'var(--font-cinzel-decorative)',
         subtitle: 'var(--font-cinzel)',
-        body: 'var(--font-roboto)',
+        body: 'var(--font-geist-sans)',
+        roboto: 'var(--font-roboto)',
         heading: 'var(--font-uncial-antiqua)',
         ligatures: 'var(--font-fira-code)',
       },
@@ -114,7 +115,11 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    require('tailwindcss-textshadow'),
+  ],
 }
 
 export default config

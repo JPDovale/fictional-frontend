@@ -20,17 +20,23 @@ import { MentionList } from '@/components/application/Editor/components/MentionL
 
 interface NewEditor {
   preValueKey: string
+  preValue?: string
   onDiff: (v: string) => void
+  disableDebounce?: boolean
   personsSuggestion?: PersonPreview[]
 }
 
 export function useEditor({
   preValueKey,
+  preValue: _preValue,
   onDiff,
+  disableDebounce = false,
   personsSuggestion = [],
 }: NewEditor) {
   const preValue =
-    localstorageFunctions.Get<string>(preValueKey as LocalStorageKeys) ?? ''
+    localstorageFunctions.Get<string>(preValueKey as LocalStorageKeys) ??
+    _preValue ??
+    ''
 
   const _editor = useTipTapEditor({
     onUpdate: ({ editor }) => {
@@ -189,7 +195,7 @@ export function useEditor({
     return _editor?.getHTML()
   }
 
-  useEditorDebounce({ editorKey: preValueKey, fn: onDiff })
+  useEditorDebounce({ editorKey: preValueKey, fn: onDiff, disableDebounce })
 
   const editor = {
     editor: _editor,

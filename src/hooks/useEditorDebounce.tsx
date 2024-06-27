@@ -4,18 +4,25 @@ import { useEffect } from 'react'
 
 interface UseEditorDebounceProps {
   editorKey: string
+  disableDebounce: boolean
   fn: (v: string) => void
 }
 
-export function useEditorDebounce({ editorKey, fn }: UseEditorDebounceProps) {
+export function useEditorDebounce({
+  editorKey,
+  fn,
+  disableDebounce = false,
+}: UseEditorDebounceProps) {
   return useEffect(() => {
     const value =
       localstorageFunctions.Get<string>(editorKey as LocalStorageKeys) ?? ''
 
-    const interval = setInterval(() => {
-      fn(value)
-    }, 500)
+    if (!disableDebounce) {
+      const interval = setInterval(() => {
+        fn(value)
+      }, 500)
 
-    return () => clearInterval(interval)
-  }, [editorKey, fn])
+      return () => clearInterval(interval)
+    }
+  }, [editorKey, fn, disableDebounce])
 }

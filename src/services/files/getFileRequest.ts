@@ -3,6 +3,7 @@ import { connection } from '../fcapi/axios'
 export interface File {
   id: string
   title: string
+  folderId: string | null
   content: string
   projectId: string
   createdAt: Date

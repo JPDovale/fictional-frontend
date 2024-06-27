@@ -1,13 +1,22 @@
 'use client'
 import { Loading } from '@/components/application/Loading'
 import { usePreload } from '@/hooks/usePreload'
+import { QueryProvider } from './QueryProvider'
 
 interface PreloadProviderProps {
   children: React.ReactNode
 }
 
-export function PreloadProvider({ children }: PreloadProviderProps) {
+function Wrapper({ children }: PreloadProviderProps) {
   const { isLoading } = usePreload()
 
-  return <section>{isLoading ? <Loading /> : children}</section>
+  return isLoading ? <Loading /> : children
+}
+
+export function PreloadProvider({ children }: PreloadProviderProps) {
+  return (
+    <QueryProvider>
+      <Wrapper>{children}</Wrapper>
+    </QueryProvider>
+  )
 }

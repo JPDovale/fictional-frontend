@@ -12,7 +12,7 @@ import { useTheme } from '@/hooks/useTheme'
 import { Theme } from '@/styles/theme'
 
 const editorStyles = tv({
-  base: 'min-w-[45rem] max-w-[45rem] prose prose-purple group',
+  base: 'prose prose-purple group',
   variants: {
     theme: {
       [Theme.DARK]: 'prose-invert',
@@ -26,10 +26,12 @@ interface EditorProps {
   editor: EditorTipTap | null
   menuOptions: EditorMenuOption[]
   isLoading?: boolean
+  className?: string
 }
 
 export function Editor({
   editor,
+  className,
   menuOptions = [],
   isLoading = false,
 }: EditorProps) {
@@ -63,7 +65,7 @@ export function Editor({
     <>
       <EditorContent
         data-theme={theme}
-        className={editorStyles({ theme })}
+        className={editorStyles({ theme, className })}
         editor={editor}
         onDoubleClick={handleDoubleClick}
       />

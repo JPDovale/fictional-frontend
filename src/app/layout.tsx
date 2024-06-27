@@ -7,9 +7,8 @@ import {
   Uncial_Antiqua,
 } from 'next/font/google'
 import '../styles/globals.css'
-import { QueryProvider } from '@/services/QueryProvider'
 import { Toaster } from '@/components/ui/toaster'
-import { PreloadProvider } from '@/services/PreloadProvider'
+import { GeistSans } from 'geist/font/sans'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -56,11 +55,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={fonts.map((f) => f.variable).join(' ')}>
-        <QueryProvider>
-          <PreloadProvider>{children}</PreloadProvider>
-        </QueryProvider>
-        <Toaster />
+      <body
+        className={`${fonts.map((f) => f.variable).join(' ')} ${GeistSans.variable}`}
+      >
+        {children} <Toaster />
       </body>
     </html>
   )

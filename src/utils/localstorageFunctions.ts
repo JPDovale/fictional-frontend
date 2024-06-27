@@ -1,3 +1,4 @@
+'use client'
 import { LocalStorageKeys } from '../configs/localstorageKeys'
 
 function Get<T = unknown>(key: LocalStorageKeys): T | null {

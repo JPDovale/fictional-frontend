@@ -14,6 +14,12 @@ interface UseInterfaceStore {
   deletingPersonAttribute: string | null
   setDeletingPersonAttribute: (newState: string | null) => void
 
+  deletingFolder: string | null
+  setDeletingFolder: (newState: string | null) => void
+
+  deletingFile: string | null
+  setDeletingFile: (newState: string | null) => void
+
   sideBarIsOpen: boolean
   openSideBar: () => void
   closeSideBar: () => void
@@ -38,6 +44,8 @@ const useInterfaceStore = create<UseInterfaceStore>((set, get) => {
     navIsOpen: false,
     deletingPerson: null,
     deletingPersonAttribute: null,
+    deletingFolder: null,
+    deletingFile: null,
     sideBarIsOpen: true,
     commandKIsOpen: false,
     theme: Theme.SYSTEM,
@@ -53,6 +61,14 @@ const useInterfaceStore = create<UseInterfaceStore>((set, get) => {
 
     setDeletingPersonAttribute: (newState) => {
       set({ deletingPersonAttribute: newState })
+    },
+
+    setDeletingFolder: (newState) => {
+      set({ deletingFolder: newState })
+    },
+
+    setDeletingFile: (newState) => {
+      set({ deletingFile: newState })
     },
 
     loadConfig: () => {

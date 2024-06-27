@@ -37,17 +37,10 @@ export interface NodeTree {
 interface NodeProps {
   node: NodeTree
   level?: number
-  nodeSelected: string
-  setNodeSelected: (node: string) => void
 }
 
-export function Node({
-  node,
-  level = 0,
-  nodeSelected,
-  setNodeSelected,
-}: NodeProps) {
-  const { childs, closed: startClosed = true, id, path, isToShow = true } = node
+export function Node({ node, level = 0 }: NodeProps) {
+  const { childs, closed: startClosed = true, path, isToShow = true } = node
 
   const [closed, setClosed] = useState(startClosed)
   const { theme } = useTheme()
@@ -63,8 +56,6 @@ export function Node({
     if (path) {
       navigate.push(path)
     }
-
-    setNodeSelected(id)
   }
 
   if (!isToShow) return null
@@ -73,7 +64,6 @@ export function Node({
     <div
       data-theme={theme}
       className="flex flex-col data-[selected=true]:bg-gray200 data-[selected=true]:data-[theme=light]:bg-gray800"
-      data-selected={nodeSelected === id}
     >
       <NodeContextMenu handleNodeClick={handleNodeClick} node={node} />
 
@@ -84,14 +74,7 @@ export function Node({
           }}
           className="border-l border-gray400"
         >
-          {childs && (
-            <Tree
-              nodes={childs}
-              level={level + 1}
-              nodeSelected={nodeSelected}
-              setNodeSelected={setNodeSelected}
-            />
-          )}
+          {childs && <Tree nodes={childs} level={level + 1} />}
         </div>
       )}
     </div>
