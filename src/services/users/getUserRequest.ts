@@ -4,6 +4,7 @@ export interface User {
   id: string
   name: string
   username: string
+  isSubscriber: boolean
   skipLogin: boolean
   verified: boolean
   imageUrl: string | null

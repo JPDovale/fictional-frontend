@@ -11,6 +11,7 @@ export interface Action {
   label: string
   action: () => void | string | Promise<void>
   icon?: LucideIcon | Icon | IconType
+  disabled?: boolean
   postIcon?: LucideIcon | Icon | IconType
   type?: 'default' | 'danger' | 'input'
 }
@@ -65,7 +66,11 @@ export function Node({ node, level = 0 }: NodeProps) {
       data-theme={theme}
       className="flex flex-col data-[selected=true]:bg-gray200 data-[selected=true]:data-[theme=light]:bg-gray800"
     >
-      <NodeContextMenu handleNodeClick={handleNodeClick} node={node} />
+      <NodeContextMenu
+        handleNodeClick={handleNodeClick}
+        closed={closed}
+        node={node}
+      />
 
       {!closed && (
         <div

@@ -1,3 +1,4 @@
+import { Header } from '@/components/application/Header'
 import {
   Anvil,
   ArrowUpFromLine,
@@ -18,22 +19,7 @@ import Link from 'next/link'
 export default function HomePage() {
   return (
     <section className="bg-gray100 flex flex-col overflow-x-hidden min-h-screen max-h-screen overflow-y-auto pb-16">
-      <header className="bg-gray200 border-b border-b-purple900 px-4 py-2 fixed w-full z-10">
-        <div className="flex items-center gap-2">
-          <Image src="/logo.png" alt="logo" width={32} height={32} />
-          <div className="flex gap-2 items-end">
-            <span className="font-bold leading-none text-xl text-gray800">
-              Fictional
-            </span>
-            <span className="font-bold leading-none text-xxs text-gray800 opacity-60 relative">
-              by Vortecxx
-              <span className="text-xxs text-gray800 opacity-60 leading-none rotate-90 absolute -bottom-1.5 right-[5px]">
-                {')'}
-              </span>
-            </span>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="w-full max-w-6xl mx-auto p-4 text-gray800">
         <h1 className="font-extrabold text-8xl pt-40 text-center text-violet-300 leading-[6rem]">

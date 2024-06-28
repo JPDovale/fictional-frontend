@@ -1,8 +1,10 @@
 'use client'
 import { useProject } from '@/hooks/useProject'
 import { useTheme } from '@/hooks/useTheme'
+import { useUser } from '@/hooks/useUser'
 import { Theme } from '@/styles/theme'
 import { HTMLAttributes } from 'react'
+import { FaCrown } from 'react-icons/fa6'
 import { tv } from 'tailwind-variants'
 
 const headerStyles = tv({
@@ -33,6 +35,7 @@ export function ProjectPageHeader({
   className,
   ...props
 }: ProjectPageHeaderProps) {
+  const { user } = useUser()
   const { theme } = useTheme()
   const { useHeader } = useProject({ projectId })
   const { paths } = useHeader()
@@ -40,6 +43,9 @@ export function ProjectPageHeader({
   return (
     <>
       <header className={headerStyles({ theme, className })} {...props}>
+        {user?.isSubscriber && (
+          <FaCrown className="fill-importance5 mr-0.5" size={14} />
+        )}
         {paths.map((path, i) => (
           <div key={path} className="flex items-center mt-0.5 gap-1">
             <span className={pathStyles()}>{path}</span>

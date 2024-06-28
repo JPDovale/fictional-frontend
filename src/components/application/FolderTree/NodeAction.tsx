@@ -28,6 +28,7 @@ export function NodeAction({ action, setIsToShowInput }: NodeActionProps) {
 
   return (
     <ContextMenuItem
+      disabled={action.disabled ?? false}
       onClick={handleClick}
       data-theme={theme}
       key={action.label}

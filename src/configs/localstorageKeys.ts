@@ -4,4 +4,5 @@ export enum LocalStorageKeys {
   THEME = '@ms-theme',
   EDITOR_TEMP_PERSISTENCE = '@ms-editor-temp-persistence',
   WAIT_REFRESH = '@fc-wait-refresh',
+  PRICE_ID = '@fc-price-id',
 }

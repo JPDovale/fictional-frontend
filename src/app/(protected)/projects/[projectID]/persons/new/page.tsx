@@ -21,6 +21,8 @@ import { PersonTypeSelect } from '@/components/persons/PersonTypeSelect'
 import { PersonsSelect } from '@/components/persons/PersonsSelect'
 import { uploadFile } from '@/services/storage/uploadFile'
 import { isObject } from 'lodash'
+import { useUser } from '@/hooks/useUser'
+import { FaCrown } from 'react-icons/fa'
 
 const createPersonSchema = z.object({
   name: z
@@ -60,8 +62,9 @@ export default function ProjectNewPersonPage() {
 
   const { toast } = useToast()
   const { theme } = useTheme()
+  const { user } = useUser()
   const { usePersons, project, useTimelines } = useProject({ projectId })
-  const { refetchPersons } = usePersons()
+  const { refetchPersons, persons } = usePersons()
   const { verifyEventDate, makeEventDate } = useTimelines()
 
   const {
@@ -345,12 +348,20 @@ export default function ProjectNewPersonPage() {
           type="submit"
           size="sm"
           className="mt-4"
-          disabled={isSubmitting}
+          disabled={
+            isSubmitting || (persons.length >= 8 && !user?.isSubscriber)
+          }
         >
           <Button.Icon>
             <UserPlus />
           </Button.Icon>
           <Button.Text>Criar</Button.Text>
+
+          {persons.length >= 8 && !user?.isSubscriber && (
+            <Button.Icon>
+              <FaCrown className="fill-importance5" />
+            </Button.Icon>
+          )}
         </Button.Root>
       </form>
     </main>

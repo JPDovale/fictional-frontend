@@ -339,7 +339,10 @@ export default function ProjectPage() {
             navigate.push(node.path)
           }}
           maxZoom={12}
-          minZoom={1.2}
+          minZoom={0.5}
+          linkHoverPrecision={10}
+          warmupTicks={3}
+          nodeRelSize={1.5}
           nodeAutoColorBy="group"
           linkCanvasObject={(link, ctx) => {
             ctx.strokeStyle = `${graphBaseColor}50`
@@ -357,10 +360,10 @@ export default function ProjectPage() {
           }}
           nodeCanvasObject={(node, ctx, globalScale) => {
             const { label } = node
-            const fontSize = 12 / globalScale
+            const fontSize = 14 / globalScale
 
             if (globalScale > 2) {
-              ctx.font = `${fontSize}px Roboto`
+              ctx.font = `${fontSize}px Giest Sans`
               ctx.textAlign = 'center'
               ctx.textBaseline = 'middle'
               ctx.fillStyle = node.color
@@ -368,7 +371,7 @@ export default function ProjectPage() {
             }
 
             ctx.beginPath()
-            ctx.arc(node.x ?? 0, node.y ?? 0, 4 / globalScale, 0, 2 * Math.PI)
+            ctx.arc(node.x ?? 0, node.y ?? 0, 4.2 / globalScale, 0, 2 * Math.PI)
             ctx.fillStyle = node.color ?? 'white'
             ctx.fill()
           }}

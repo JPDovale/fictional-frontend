@@ -5,6 +5,7 @@ import { ImportanceLevelSelect } from '@/components/timelines/ImportanceLevelSel
 import { Dialog, DialogContent, DialogPortal } from '@/components/ui/dialog'
 import { useToast } from '@/components/ui/use-toast'
 import { useProject } from '@/hooks/useProject'
+import { useUser } from '@/hooks/useUser'
 import { createPersonAttributeMutationRequest } from '@/services/persons/createPersonAttributeMutationRequest'
 import { ImportanceLevel } from '@/services/timelines/getTimelineRequest'
 import { StatusCode } from '@/shared/types/types/StatusCode'
@@ -12,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { X } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { FieldErrors, useForm } from 'react-hook-form'
+import { FaCrown } from 'react-icons/fa6'
 import { z } from 'zod'
 
 const createMutationWithEventSchema = z.object({
@@ -79,6 +81,7 @@ export function CreateAttributeMutationDialog({
   const { useAttribute } = usePerson({ personId })
   const { attribute, refetchAttribute } = useAttribute({ attributeId })
   const { file } = useFile({ fileId: attribute?.fileId })
+  const { user } = useUser()
 
   const datePeriod = watch('datePeriod')
   const importanceLevel = watch('importanceLevel')
@@ -209,8 +212,21 @@ export function CreateAttributeMutationDialog({
               </>
             )}
 
-            <Button.Root size="xs" type="submit" disabled={isSubmitting}>
+            <Button.Root
+              size="xs"
+              type="submit"
+              disabled={
+                isSubmitting ||
+                ((attribute?.mutations.length ?? 0) >= 1 && !user?.isSubscriber)
+              }
+            >
               <Button.Text>Criar</Button.Text>
+              {(attribute?.mutations.length ?? 0) >= 1 &&
+                !user?.isSubscriber && (
+                  <Button.Icon>
+                    <FaCrown className="fill-importance5" />
+                  </Button.Icon>
+                )}
             </Button.Root>
           </form>
         </DialogContent>

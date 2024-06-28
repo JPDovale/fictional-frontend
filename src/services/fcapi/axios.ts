@@ -11,7 +11,7 @@ import { CookiesKeys } from '@/hooks/useCookies'
 import localstorageFunctions from '@/utils/localstorageFunctions'
 import { LocalStorageKeys } from '@/configs/localstorageKeys'
 
-const URL = process.env.NEXT_PUBLIC_API_URL
+export const URL = process.env.NEXT_PUBLIC_API_URL
 
 const apiConfig: AxiosInstance = axios.create({
   baseURL: URL,
@@ -109,7 +109,6 @@ apiConfig.interceptors.request.use(
         }
       }
     }
-
     config.headers.Authorization = `Bearer ${token}`
     apiConfig.defaults.headers.Authorization = `Bearer ${token}`
 

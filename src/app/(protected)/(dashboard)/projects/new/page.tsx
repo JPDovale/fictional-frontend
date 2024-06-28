@@ -18,6 +18,8 @@ import imageCompression from 'browser-image-compression'
 import { createProjectRequest } from '@/services/projects/createProjectRequest'
 import { uploadFile } from '@/services/storage/uploadFile'
 import { isObject } from 'lodash'
+import { useUser } from '@/hooks/useUser'
+import { FaCrown } from 'react-icons/fa'
 
 const createProjectSchema = z.object({
   name: z
@@ -44,7 +46,8 @@ export default function NewProjectPage() {
 
   const navigate = useRouter()
 
-  const { refetchProjects } = useProjects()
+  const { refetchProjects, projects } = useProjects()
+  const { user } = useUser()
   const { toast } = useToast()
 
   const {
@@ -204,9 +207,19 @@ export default function NewProjectPage() {
             className="mt-4"
             size="sm"
             type="submit"
-            disabled={!isDirty || isSubmitting}
+            disabled={
+              !isDirty ||
+              isSubmitting ||
+              (projects.length >= 1 && !user?.isSubscriber)
+            }
           >
             <Button.Text>Criar</Button.Text>
+
+            {projects.length >= 1 && !user?.isSubscriber && (
+              <Button.Icon>
+                <FaCrown className="fill-importance5" />
+              </Button.Icon>
+            )}
           </Button.Root>
         </Input.Root>
 

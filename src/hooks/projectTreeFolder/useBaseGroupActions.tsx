@@ -7,8 +7,10 @@ import { BuildBlock } from '@/services/projects/getProjectsRequest'
 import { useFolders } from '../useFolders'
 import { ActionGroup } from '@/components/application/FolderTree/Node'
 import { FaCrown } from 'react-icons/fa6'
+import { useUser } from '../useUser'
 
 export function useBaseGroupActions() {
+  const { user } = useUser()
   const { projectID } = useParams()
   const projectId = projectID as string
 
@@ -57,6 +59,7 @@ export function useBaseGroupActions() {
           action: () => createFolder(),
           icon: mapperProjectBase.getIcon('folders'),
           postIcon: FaCrown,
+          disabled: !user?.isSubscriber,
         },
       ],
     },
