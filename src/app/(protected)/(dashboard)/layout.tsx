@@ -1,20 +1,22 @@
 'use client'
 import { headerLinks, Header } from '@/components/application/DashboardHeader'
 import { Navigation, NavigationLink } from '@/components/application/Navigation'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useCheckoutSession } from '@/hooks/useCheckoutSession'
 import { useNav } from '@/hooks/useNav'
 import { useTheme } from '@/hooks/useTheme'
-import { useUser } from '@/hooks/useUser'
 import { mainStyles } from '@/styles/theme'
-import { HelpCircle, Home } from 'lucide-react'
-import { FaCrown } from 'react-icons/fa6'
+import { HelpCircle, Home, User } from 'lucide-react'
 
 const dashboardLinks: NavigationLink[] = [
   {
     pathname: '/projects',
     Icon: Home,
     label: 'Inicio',
+  },
+  {
+    pathname: '/user',
+    Icon: User,
+    label: 'Minha conta',
   },
   {
     pathname: '/help',
@@ -34,7 +36,6 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { theme } = useTheme()
-  const { user } = useUser()
   const { navIsOpen, handleChangeOpenNav } = useNav()
   useCheckoutSession()
 
@@ -65,18 +66,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <Header.Button link={link} key={link.label} />
           ))}
 
-          <span className="ml-auto text-xs -mr-2 font-bold opacity-60">
-            {user?.username}
-          </span>
-
-          {user?.isSubscriber && <FaCrown className="fill-importance5" />}
-
-          <Avatar className="w-[1.625rem] h-[1.625rem]">
-            <AvatarImage src={user?.imageUrl ?? ''} />
-            <AvatarFallback className="text-xs">
-              {user?.name.slice(0, 1).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
+          <Header.UserAvatar />
         </Header.Root>
         {children}
       </div>

@@ -169,7 +169,7 @@ export function RegisterForm({
 
         <span className="text-xs opacity-60 mt-2">
           Ao se registrar, concordo com os{' '}
-          <Link href="#" className="underline text-violet-500">
+          <Link href="/terms" className="underline text-violet-500">
             termos de uso e condicoes
           </Link>{' '}
           do site.

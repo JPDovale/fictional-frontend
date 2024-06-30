@@ -363,7 +363,7 @@ export default function ProjectPage() {
             const fontSize = 14 / globalScale
 
             if (globalScale > 2) {
-              ctx.font = `${fontSize}px Giest Sans`
+              ctx.font = `${fontSize}px Roboto`
               ctx.textAlign = 'center'
               ctx.textBaseline = 'middle'
               ctx.fillStyle = node.color

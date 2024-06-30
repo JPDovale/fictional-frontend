@@ -1,6 +1,7 @@
 import { FilePlus, LucideIcon } from 'lucide-react'
 import { Root } from './Root'
 import { Button } from './Button'
+import { UserAvatar } from './UserAvatar'
 
 export type HeaderLink = {
   pathname: string
@@ -34,4 +35,5 @@ export const headerLinks: HeaderLink[] = [
 export const Header = {
   Root,
   Button,
+  UserAvatar,
 }
