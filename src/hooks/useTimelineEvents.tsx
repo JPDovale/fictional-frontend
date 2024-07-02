@@ -114,7 +114,7 @@ export function useTimelineEvents({ events }: UseTimelineEventsProps) {
 
     const initOfDate = `${day}:${month}:${year}:${period}`
 
-    const eventsOfDate = events.filter((e) => e.date.includes(initOfDate))
+    const eventsOfDate = events.filter((e) => e.date.startsWith(initOfDate))
 
     eventsOfDate.forEach((e) => {
       if (!dayGroup.events.includes(e)) {
