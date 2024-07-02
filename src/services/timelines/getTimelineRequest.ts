@@ -15,6 +15,7 @@ export interface EventDate {
 
 export interface Event {
   id: string
+  title: string
   event: string
   importanceLevel: ImportanceLevel
   date: string

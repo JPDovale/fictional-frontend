@@ -5,6 +5,8 @@ import { Event } from '@/services/timelines/getTimelineRequest'
 import { normalizeEventDate } from '@/utils/normalizeEventDate'
 import { useParams } from 'next/navigation'
 import { z } from 'zod'
+import { UpdateEventDialog } from '../UpdateEventDialog'
+import { DeletingEventModal } from '../DeletingEventModal'
 
 interface DayProps {
   event: Event
@@ -38,6 +40,7 @@ export function DayEvent({ event }: DayProps) {
     .map((id) => id.split('='))
 
   let eventDesc = event.event
+  let eventTitle = event.title
 
   ids.forEach((prop) => {
     const toReplace = `$=${prop[0]}=${prop[1]}$=`
@@ -56,8 +59,12 @@ export function DayEvent({ event }: DayProps) {
     }
   })
 
+  if (event.event === eventTitle) {
+    eventTitle = eventDesc
+  }
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col w-full gap-2">
       <div className="flex gap-2">
         <div
           className="w-3 h-3 bg-gray400 rounded-full shadow-defaultDark -ml-1.5 mt-1 data-[importance=a]:bg-importance1 data-[importance=b]:bg-importance2 data-[importance=c]:bg-importance3 data-[importance=d]:bg-importance4 data-[importance=e]:bg-importance5 data-[importance=f]:bg-importance6 data-[importance=g]:bg-importance7 data-[importance=h]:bg-importance8 data-[importance=i]:bg-importance9 data-[importance=j]:bg-importance10"
@@ -69,9 +76,24 @@ export function DayEvent({ event }: DayProps) {
         </span>
       </div>
 
-      <p className="ml-3 text-sm text-justify w-full p-2 rounded-lg shadow-defaultDark mb-6">
-        {eventDesc}
-      </p>
+      <div className="flex justify-between">
+        <span className="text-lg opacity-60 font-bold ml-3">{eventTitle}</span>
+
+        <div className="flex gap-1">
+          {!event.title.includes('=attr$=') &&
+            !event.title.includes('=pers$=') && (
+              <>
+                <DeletingEventModal eventId={event.id} />
+                <UpdateEventDialog eventId={event.id} />
+              </>
+            )}
+        </div>
+      </div>
+      <div className="w-full pl-3 mb-6">
+        <p className="text-sm text-justify w-full p-2 rounded-lg shadow-defaultDark ">
+          {eventDesc}
+        </p>
+      </div>
     </div>
   )
 }

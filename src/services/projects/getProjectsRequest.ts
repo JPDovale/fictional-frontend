@@ -4,12 +4,14 @@ export enum BuildBlock {
   FOUNDATION = 'FOUNDATION',
   TIME_LINES = 'TIME_LINES',
   PERSONS = 'PERSONS',
+  SCENES_BOARD = 'SCENES_BOARD',
 }
 
 export interface BuildBlocksJson {
   FOUNDATION: boolean
   TIME_LINES: boolean
   PERSONS: boolean
+  SCENES_BOARD: boolean
 }
 
 export interface Project {

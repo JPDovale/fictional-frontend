@@ -7,6 +7,8 @@ import { useProject } from '@/hooks/useProject'
 import { NotFound } from '@/components/application/NotFound'
 import { SkeletonBase } from '@/components/ui/skeletonBase'
 import { Calendar } from '@/components/application/Calendar'
+import { monthsMapper } from '@/utils/monthsMapper'
+import { CreateEventDialog } from './components/CreateEventDialog'
 
 interface CalendarDate {
   day: number
@@ -25,20 +27,6 @@ interface CalendarWeek {
   week: number
   days: CalendarDay[]
 }
-const monthMapper = {
-  1: 'Janeiro',
-  2: 'Fevereiro',
-  3: 'Marco',
-  4: 'Abril',
-  5: 'Maio',
-  6: 'Junho',
-  7: 'Julho',
-  8: 'Agosto',
-  9: 'Setembro',
-  10: 'Outubro',
-  11: 'Novembro',
-  12: 'Dezembro',
-} as { [x: number]: string }
 
 export default function ProjectTimelinePage() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0)
@@ -281,7 +269,10 @@ export default function ProjectTimelinePage() {
           )}
 
           {!isLoadingTimeline && (
-            <h2 className="text-4xl font-bold my-6">{timeline!.name}</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-4xl font-bold my-6">{timeline!.name}</h2>
+              <CreateEventDialog />
+            </div>
           )}
 
           <Line years={dates} isLoading={isLoadingTimeline} />
@@ -294,7 +285,7 @@ export default function ProjectTimelinePage() {
                 currentEvent
                   ? `${currentEvent?.dateObject.year} ${
                       currentEvent?.dateObject.period === -1 ? 'A.C.' : 'D.C.'
-                    } ${monthMapper[currentEvent?.dateObject.month]}`
+                    } ${monthsMapper[currentEvent?.dateObject.month]}`
                   : 'Nada por aqui'
               }
               onNext={handleNextEvent}

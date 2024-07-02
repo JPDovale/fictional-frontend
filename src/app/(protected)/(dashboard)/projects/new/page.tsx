@@ -8,8 +8,8 @@ import { useProjects } from '@/hooks/useProjects'
 import { BuildBlock } from '@/services/projects/getProjectsRequest'
 import { StatusCode } from '@/shared/types/types/StatusCode'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Buildings } from '@phosphor-icons/react'
-import { Clock, Users } from 'lucide-react'
+import { Building, Clock, Users } from 'lucide-react'
+// import { BsKanban } from 'react-icons/bs'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FieldErrors, useForm } from 'react-hook-form'
@@ -20,6 +20,8 @@ import { uploadFile } from '@/services/storage/uploadFile'
 import { isObject } from 'lodash'
 import { useUser } from '@/hooks/useUser'
 import { FaCrown } from 'react-icons/fa'
+import { useMapper } from '@/hooks/useMapper'
+import { buildBlocksMapper } from '@/configs/mappers/buildBlocks'
 
 const createProjectSchema = z.object({
   name: z
@@ -47,12 +49,14 @@ export default function NewProjectPage() {
   const navigate = useRouter()
 
   const { refetchProjects, projects } = useProjects()
+  const mapper = useMapper(buildBlocksMapper)
   const { user } = useUser()
   const { toast } = useToast()
 
   const {
     register,
     handleSubmit,
+    // setValue,
     formState: { isSubmitting, isDirty },
     watch,
     reset,
@@ -104,22 +108,22 @@ export default function NewProjectPage() {
   }
 
   // function addBuildBlock(buildBlock: BuildBlock) {
-  //   setValue('buildBlocks', [...buildBlocks, buildBlock]);
+  //   setValue('buildBlocks', [...buildBlocks, buildBlock])
   // }
   //
   // function removeBuildBlock(buildBlock: BuildBlock) {
   //   setValue(
   //     'buildBlocks',
-  //     buildBlocks.filter((bb) => bb !== buildBlock)
-  //   );
+  //     buildBlocks.filter((bb) => bb !== buildBlock),
+  //   )
   // }
-
+  //
   // function handleToggleBuildBlock(buildBlock: BuildBlock, event: boolean) {
   //   if (event) {
-  //     return addBuildBlock(buildBlock);
+  //     return addBuildBlock(buildBlock)
   //   }
   //
-  //   return removeBuildBlock(buildBlock);
+  //   return removeBuildBlock(buildBlock)
   // }
 
   async function handleCreateProject(data: CreateProjectData) {
@@ -239,6 +243,8 @@ export default function NewProjectPage() {
               <Input.Label>Blocos de construção</Input.Label>
             </Input.Header>
 
+            <Input.Label className="text-xs">Essenciais</Input.Label>
+
             <div className="grid grid-cols-2 gap-4 mt-2">
               <Checkbox.Root>
                 <Checkbox.CheckerRoot
@@ -254,10 +260,12 @@ export default function NewProjectPage() {
                   <Checkbox.CheckerIndicator />
                 </Checkbox.CheckerRoot>
 
-                <Checkbox.Label>Fundação</Checkbox.Label>
+                <Checkbox.Label>
+                  {mapper.getTranslation(BuildBlock.FOUNDATION)}
+                </Checkbox.Label>
 
                 <Checkbox.Icon>
-                  <Buildings />
+                  <Building />
                 </Checkbox.Icon>
               </Checkbox.Root>
 
@@ -275,7 +283,9 @@ export default function NewProjectPage() {
                   <Checkbox.CheckerIndicator />
                 </Checkbox.CheckerRoot>
 
-                <Checkbox.Label>Personagens</Checkbox.Label>
+                <Checkbox.Label>
+                  {mapper.getTranslation(BuildBlock.PERSONS)}
+                </Checkbox.Label>
 
                 <Checkbox.Icon>
                   <Users />
@@ -296,13 +306,40 @@ export default function NewProjectPage() {
                   <Checkbox.CheckerIndicator />
                 </Checkbox.CheckerRoot>
 
-                <Checkbox.Label>Linhas de tempo</Checkbox.Label>
+                <Checkbox.Label>
+                  {mapper.getTranslation(BuildBlock.TIME_LINES)}
+                </Checkbox.Label>
 
                 <Checkbox.Icon>
                   <Clock />
                 </Checkbox.Icon>
               </Checkbox.Root>
             </div>
+
+            {/* <Input.Label className="text-xs mt-4">Básicos</Input.Label> */}
+            {/* <div className="grid grid-cols-2 gap-4 mt-2"> */}
+            {/*   <Checkbox.Root> */}
+            {/*     <Checkbox.CheckerRoot */}
+            {/*       checked={buildBlocks.includes(BuildBlock.SCENES_BOARD)} */}
+            {/*       onCheckedChange={(e) => */}
+            {/*         handleToggleBuildBlock( */}
+            {/*           BuildBlock.SCENES_BOARD, */}
+            {/*           e as unknown as boolean, */}
+            {/*         ) */}
+            {/*       } */}
+            {/*     > */}
+            {/*       <Checkbox.CheckerIndicator /> */}
+            {/*     </Checkbox.CheckerRoot> */}
+            {/**/}
+            {/*     <Checkbox.Label> */}
+            {/*       {mapper.getTranslation(BuildBlock.SCENES_BOARD)} */}
+            {/*     </Checkbox.Label> */}
+            {/**/}
+            {/*     <Checkbox.Icon> */}
+            {/*       <BsKanban /> */}
+            {/*     </Checkbox.Icon> */}
+            {/*   </Checkbox.Root> */}
+            {/* </div> */}
           </Input.Root>
         </div>
       </form>

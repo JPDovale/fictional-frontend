@@ -1,27 +1,23 @@
-import { BuildBlocksJson } from '@/services/projects/getProjectsRequest'
-import { NoteBlank } from '@phosphor-icons/react'
-import { Building, Clock, LucideIcon, Users } from 'lucide-react'
+import {
+  BuildBlock,
+  BuildBlocksJson,
+} from '@/services/projects/getProjectsRequest'
+import { Icon, NoteBlank } from '@phosphor-icons/react'
+import { LucideIcon } from 'lucide-react'
 import { useMemo } from 'react'
-
-const BuildBlocksIconsMap = {
-  FOUNDATION: Building,
-  PERSONS: Users,
-  TIME_LINES: Clock,
-} as const
-
-const BuildBlocksNamesMap = {
-  FOUNDATION: 'Fundação',
-  PERSONS: 'Personagens',
-  TIME_LINES: 'Linhas de tempo',
-} as const
+import { useMapper } from './useMapper'
+import { buildBlocksMapper } from '@/configs/mappers/buildBlocks'
+import { IconType } from 'react-icons/lib'
 
 export function useBuildBlocks(buildBlocks: BuildBlocksJson | undefined) {
-  function getIcon(name: keyof BuildBlocksJson): LucideIcon {
-    return BuildBlocksIconsMap[name] || NoteBlank
+  const mapper = useMapper(buildBlocksMapper)
+
+  function getIcon(name: keyof BuildBlocksJson): LucideIcon | Icon | IconType {
+    return mapper.getIcon(name as BuildBlock) || NoteBlank
   }
 
   function getName(name: keyof BuildBlocksJson): string {
-    return BuildBlocksNamesMap[name] || name
+    return mapper.getName(name as BuildBlock) || name
   }
 
   const { blocksActives } = useMemo(() => {
@@ -30,12 +26,12 @@ export function useBuildBlocks(buildBlocks: BuildBlocksJson | undefined) {
     if (buildBlocks) {
       Object.entries(buildBlocks).forEach(
         ([k, v]) =>
-          v && buildBlocksActives.push(getName(k as keyof BuildBlocksJson)),
+          v && buildBlocksActives.push(mapper.getName(k as BuildBlock)),
       )
     }
 
     return { blocksActives: buildBlocksActives }
-  }, [buildBlocks])
+  }, [buildBlocks, mapper])
 
   function isBlockActive(name: keyof BuildBlocksJson) {
     return blocksActives.includes(getName(name))

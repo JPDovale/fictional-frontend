@@ -1,6 +1,7 @@
 import { Mapper } from '@/hooks/useMapper'
 import { BuildBlock } from '@/services/projects/getProjectsRequest'
 import { Building, Clock, Users } from 'lucide-react'
+import { BsFillKanbanFill } from 'react-icons/bs'
 
 export const buildBlocksMapper: Mapper<BuildBlock> = {
   [BuildBlock.FOUNDATION]: {
@@ -20,6 +21,12 @@ export const buildBlocksMapper: Mapper<BuildBlock> = {
     translation: 'Linhas de tempo',
     icon: Clock,
     name: 'timelines',
+  },
+  [BuildBlock.SCENES_BOARD]: {
+    id: 'a1a1a1a1',
+    translation: 'Quadro de cenas',
+    icon: BsFillKanbanFill,
+    name: 'scenesBoard',
   },
 }
 

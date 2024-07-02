@@ -8,11 +8,11 @@ import { useTheme } from '@/hooks/useTheme'
 import { ImportanceLevel } from '@/services/timelines/getTimelineRequest'
 
 const itemStyles = tv({
-  base: 'relative z-[150] flex font-bold cursor-pointer bg-gray200 w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent  data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+  base: 'relative z-[150] flex font-bold cursor-pointer  w-full select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent  data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
   variants: {
     theme: {
-      [Theme.DARK]: 'aria-selected:bg-gray400 text-text100 ',
-      [Theme.LIGHT]: '',
+      [Theme.DARK]: 'aria-selected:bg-gray400 bg-gray200 text-text100 ',
+      [Theme.LIGHT]: 'bg-gray800',
       [Theme.SYSTEM]: '',
     },
   },
