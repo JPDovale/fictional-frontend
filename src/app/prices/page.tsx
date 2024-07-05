@@ -25,7 +25,7 @@ export default async function PricesPage() {
         </h1>
         <div className="mt-2 p-[2px] w-full bg-purple800 max-w-xl shadow-xl shadow-violet-50 mx-auto rounded-full" />
 
-        <ul className="grid grid-cols-4 gap-4 mt-8">
+        <ul className="grid grid-cols-4 gap-4 mt-8 max-lg:grid-cols-2 max-sm:grid-cols-1">
           <li className="border rounded-lg flex flex-col border-purple800 p-4">
             <h4 className="font-bold text-4xl w-full flex gap-2 items-center text-importance2">
               Sonhador <Power className="min-w-7 font-bold min-h-7 w-7 h-7" />

@@ -18,6 +18,7 @@ import { Theme, mainStyles } from '@/styles/theme'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { tv } from 'tailwind-variants'
+import { FolderTreePopover } from './components/FolderTreePopover'
 
 const overlayImageStyles = tv({
   base: 'absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-t to-transparent ease-in-out duration-300 ',
@@ -66,29 +67,30 @@ export default function ProjectLayout({ children }: ProjectLayoutProps) {
 
   return (
     <div
-      className={`w-screen max-h-screen h-screen overflow-hidden flex  ${mainStyles(
+      className={`w-screen max-h-screen h-screen overflow-hidden flex ${mainStyles(
         {
           theme,
         },
       )} `}
     >
+      <DeletingPersonModal projectId={projectId} />
+      <DeletingPersonAttributeModal projectId={projectId} />
+      <DeletingFolderModal />
+      <DeletingFileModal />
+
+      <FolderTreePopover name={project?.name} projectTree={projectTree} />
       <ResizablePanelGroup
         direction="horizontal"
         className="animate-none transition-none"
       >
         <ResizablePanel
           defaultSize={15}
-          className="animate-none transition-none"
+          className="animate-none transition-none max-sm:hidden"
         >
           <FolderTree nodes={projectTree} title={project?.name} />
-
-          <DeletingPersonModal projectId={projectId} />
-          <DeletingPersonAttributeModal projectId={projectId} />
-          <DeletingFolderModal />
-          <DeletingFileModal />
         </ResizablePanel>
 
-        <ResizableHandle withHandle className="p-px" />
+        <ResizableHandle withHandle className="p-px max-sm:hidden" />
 
         <ResizablePanel
           defaultSize={60}
@@ -103,7 +105,7 @@ export default function ProjectLayout({ children }: ProjectLayoutProps) {
                   id="back"
                   width={1000}
                   height={600}
-                  className="w-full h-full object-cover blur-sm opacity-80"
+                  className="w-full h-full object-cover blur-sm opacity-80 absolute top-0"
                   src={imageUrl}
                   alt={imageAlt ?? ''}
                 />
@@ -117,12 +119,12 @@ export default function ProjectLayout({ children }: ProjectLayoutProps) {
               className="relative -mt-[17.5rem] data-[has-image=false]:-mt-[28rem] z-10 w-full flex flex-col data-[has-image=true]:data-[has-title=false]:-mt-[28rem]"
             >
               {paths.includes('Configurações') && (
-                <h1 className="text-5xl text-center font-title min-w-[45rem] mx-auto max-w-[45rem] font-bold text-text600">
+                <h1 className="text-5xl text-center font-title max-lg:-mt-40 mx-auto font-bold text-text600">
                   {project?.name}
                 </h1>
               )}
 
-              <div className="flex justify-between">{children} </div>
+              <div className="flex justify-between px-4">{children} </div>
             </div>
           </div>
         </ResizablePanel>

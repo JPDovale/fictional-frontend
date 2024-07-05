@@ -12,7 +12,7 @@ export default function ProjectsPage() {
   return (
     <main className="max-w-6xl mx-auto py-4 h-full flex-col flex w-full">
       <h3 className="text-2xl font-bold font-body px-4 opacity-60">Projetos</h3>
-      <section className="grid px-4 grid-cols-3 gap-8 mt-4">
+      <section className="grid px-4 grid-cols-3 gap-8 mt-4 max-sm:grid-cols-1 max-lg:grid-cols-2">
         {isLoading &&
           Array.from({ length: 9 }).map((_, i) => (
             <CardProject.Skeleton key={i} />

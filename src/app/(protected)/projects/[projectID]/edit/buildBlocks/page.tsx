@@ -151,7 +151,7 @@ export default function ProjectEditBuildBlocksPage() {
             <Input.Label>Blocos de construção</Input.Label>
           </Input.Header>
 
-          <div className="grid grid-cols-3 gap-4 mt-2">
+          <div className="grid grid-cols-3 max-sm:grid-cols-2 gap-4 mt-2">
             <Checkbox.Root>
               <Checkbox.CheckerRoot
                 checked={buildBlocks.includes(BuildBlock.FOUNDATION)}

@@ -235,12 +235,12 @@ export default function ProjectTimelinePage() {
   if (!timeline && !isLoadingTimeline) return <NotFound />
 
   return (
-    <main className="flex flex-col max-w-4xl w-full mx-auto -mt-20 py-4">
+    <main className="flex flex-col max-w-4xl w-full mx-auto px-2 -mt-20 py-4">
       <span className="text-sm font-bold">
         Nivel de importancia dos eventos:
       </span>
       <div className="flex gap-8 w-full">
-        <div className="flex flex-col w-2/3">
+        <div className="flex flex-col w-2/3 max-lg:w-full">
           <div className="grid grid-cols-10 gap-1 mb-4 mt-1">
             <span className="text-xxs font-bold ">Nivel 1</span>
             <span className="text-xxs font-bold ">Nivel 2</span>
@@ -278,7 +278,7 @@ export default function ProjectTimelinePage() {
           <Line years={dates} isLoading={isLoadingTimeline} />
         </div>
 
-        <div className="flex relative flex-col w-1/3">
+        <div className="flex relative flex-col w-1/3 max-lg:hidden">
           <div className="fixed px-6 top-28 max-w-[19.5rem]">
             <Calendar
               title={

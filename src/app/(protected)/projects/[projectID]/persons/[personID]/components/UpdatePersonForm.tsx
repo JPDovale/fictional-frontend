@@ -363,8 +363,8 @@ export function UpdatePersonForm({ onEdited }: UpdatePersonFormProps) {
         Apenas o tipo é obrigatório
       </span>
 
-      <div className="flex items-center gap-8">
-        <Input.Root className="h-full">
+      <div className="flex max-lg:flex-col items-center gap-8">
+        <Input.Root className="h-full max-lg:w-full">
           <Input.Header>
             <Input.Header>
               <Input.Label>Imagem</Input.Label>

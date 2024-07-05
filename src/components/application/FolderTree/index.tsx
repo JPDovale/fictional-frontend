@@ -13,7 +13,7 @@ export function FolderTree({ nodes, title = '' }: FolderTreeProps) {
 
   return (
     <div className="relative overflow-x-hidden max-h-screen overflow-y-auto w-full pb-8">
-      <div className="w-full min-w-[24rem] ">
+      <div className="w-full min-w-[24rem]">
         <div
           data-theme={theme}
           className="text-xs z-[3] fixed p-[0.3125rem] w-full font-bold border-b border-b-gray400 flex items-center bg-gray200 gap-2.5 pl-5 data-[theme=light]:bg-gray800"

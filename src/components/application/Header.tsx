@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className="bg-gray200 border-b border-b-purple900 px-4 py-2 fixed w-full flex justify-between items-center z-10">
+    <header className="bg-gray200 border-b border-b-purple900 px-4 py-2 fixed w-full flex justify-between items-center z-10 max-md:px-2">
       <div className="flex items-center gap-2">
         <Image src="/logo.png" alt="logo" width={32} height={32} />
         <div className="flex gap-2 items-end">

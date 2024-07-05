@@ -25,7 +25,7 @@ export function AttributeGroupCards({
       </span>
 
       {attributes.length > 0 ? (
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 max-sm:grid-cols-1 max-lg:grid-cols-2 gap-2">
           {attributes.map((attr) => (
             <div
               key={attr.file.id}

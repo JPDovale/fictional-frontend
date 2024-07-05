@@ -13,9 +13,9 @@ export default function UserPage() {
         Minha conta
       </h3>
 
-      <section className="grid grid-cols-2 mt-4">
-        <div className="flex flex-col gap-4 p-4">
-          <Avatar className="w-64 h-64">
+      <section className="grid grid-cols-2 mt-4 max-sm:grid-cols-1">
+        <div className="flex flex-col gap-4 p-4 max-sm:items-center">
+          <Avatar className="w-64 h-64 max-sm:w-48 max-sm:h-48">
             <AvatarImage src={user?.imageUrl ?? ''} alt="Your profile" />
             <AvatarFallback>
               <span className="text-6xl font-bold opacity-60">

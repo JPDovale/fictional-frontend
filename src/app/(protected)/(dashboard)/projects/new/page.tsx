@@ -190,7 +190,7 @@ export default function NewProjectPage() {
       </h3>
 
       <form
-        className="mt-4 grid grid-cols-2 gap-14 h-full"
+        className="mt-4 grid grid-cols-2 gap-14 h-full max-lg:grid-cols-1 max-lg:gap-4"
         onSubmit={handleSubmit(handleCreateProject, onErrors)}
       >
         <Input.Root className="px-4">

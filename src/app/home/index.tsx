@@ -22,12 +22,12 @@ export default function HomePage() {
       <Header />
 
       <main className="w-full max-w-6xl mx-auto p-4 text-gray800">
-        <h1 className="font-extrabold text-8xl pt-40 text-center text-violet-300 leading-[6rem]">
+        <h1 className="font-extrabold text-8xl pt-40 text-center text-violet-300 leading-[6rem] max-lg:text-7xl">
           O lugar onde sua <br />
           história se torna real
         </h1>
         <div className="mt-6 p-[2px] w-full bg-purple800 max-w-xl shadow-xl shadow-violet-50 mx-auto rounded-full" />
-        <h2 className="text-2xl font-semibold text-center mt-14">
+        <h2 className="text-2xl font-semibold text-center mt-14 max-md:text-xl">
           Feito para escritores de espírito incontrolável,
           <br /> grandes mentes e artistas inesquecíveis
         </h2>
@@ -37,8 +37,8 @@ export default function HomePage() {
         >
           Começe grátis agora <ArrowUpRight size={14} />
         </Link>
-        <section className="mt-40 text-gray800 grid grid-cols-3 gap-4">
-          <div></div>
+        <section className="mt-40 text-gray800 grid grid-cols-3 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1">
+          <div className="max-lg:hidden"></div>
           <div className="border rounded-lg border-purple800 p-4">
             <h4 className="text-3xl font-bold flex gap-2 items-start">
               Bem-vindo à Fictional! <Cloud className="min-w-8 min-h-8" />
@@ -51,7 +51,7 @@ export default function HomePage() {
               histórias.
             </p>
           </div>
-          <h4 className="text-3xl font-bold flex self-end border-b pb-4 border-b-purple800 gap-2 items-start">
+          <h4 className="text-3xl font-bold flex self-end border-b pb-4 border-b-purple800 gap-2 items-start pt-32">
             Por que Escolher a Fictional?{' '}
             <CircleHelp className="min-w-8 min-h-8" />
           </h4>

@@ -117,9 +117,9 @@ export function AttributeEditor({ menuOptions }: AttributeEditorProps) {
       )}
 
       {!isLoadingFile && (
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between w-full max-w-full items-start">
           <input
-            className="text-3xl font-bold mb-4 bg-transparent outline-none"
+            className="text-3xl font-bold mb-4 bg-transparent outline-none max-sm:w-[90%]"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onBlur={() => handleSave()}

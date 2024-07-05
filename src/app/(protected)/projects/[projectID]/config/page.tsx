@@ -44,7 +44,7 @@ export default function ProjectConfigPage() {
           />
         </InfoBlock.Header>
 
-        <InfoBlock.Body className="grid grid-cols-4 gap-4 mt-4">
+        <InfoBlock.Body className="grid grid-cols-4 gap-4 mt-4 max-sm:grid-cols-2">
           {Object.entries(project.buildBlocks).map(([k, v]) => {
             if (!v) return null
             return <BuildBlockUsing key={k} buildBlock={k as BuildBlock} />
