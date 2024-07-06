@@ -87,11 +87,9 @@ export default function LoginPage() {
       className={mainStyles({
         theme,
         className:
-          'grid grid-cols-2 h-screen w-screen bg-gray900 data-[theme=dark]:bg-gray100 relative',
+          'grid grid-cols-2 h-screen w-screen overflow-hidden overflow-y-auto bg-gray900 data-[theme=dark]:bg-gray100 relative',
       })}
     >
-      <Banner />
-
       <LoginForm
         isLogin={isLogin}
         setIsLogin={setIsLogin}
@@ -102,6 +100,7 @@ export default function LoginPage() {
         setIsLogin={setIsLogin}
         handleLoginWithGoogle={handleLoginWithGoogle}
       />
+      <Banner />
     </main>
   )
 }

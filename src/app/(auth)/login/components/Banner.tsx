@@ -7,7 +7,7 @@ export function Banner() {
   return (
     <section
       data-theme={theme}
-      className="bg-gray800 z-10 data-[theme=dark]:bg-gray200 flex flex-col gap-8 px-20 justify-center absolute top-0 left-0 bottom-0 w-1/2"
+      className="bg-gray800 z-10 data-[theme=dark]:bg-gray200 max-lg:hidden flex flex-col gap-8 px-20 justify-center absolute top-0 left-0 bottom-0 w-1/2"
     >
       <div className="flex flex-col gap-4">
         <h2 className="text-7xl font-heading">Fictional</h2>

@@ -110,7 +110,7 @@ export function RegisterForm({
     <form
       onSubmit={handleSubmit(handleCreateUser, onErrors)}
       data-is-login={isLogin}
-      className="h-full w-full flex flex-col py-4 px-20 justify-center items-center data-[is-login=true]:translate-x-[100%] ease-in-out duration-150"
+      className="h-full w-full max-lg:w-screen flex flex-col py-4 px-20 justify-center max-sm:px-4 max-lg:px-10 items-center data-[is-login=true]:translate-x-[100%] max-lg:data-[is-login=false]:-translate-x-[50%] max-lg:data-[is-login=true]:translate-x-[150%] ease-in-out duration-150"
     >
       <div className="flex flex-col w-full gap-2">
         <span className="text-3xl font-bold opacity-60 mb-4">Registro</span>
