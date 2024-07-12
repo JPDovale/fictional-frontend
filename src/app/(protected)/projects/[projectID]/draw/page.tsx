@@ -16,7 +16,7 @@ export default function DrawPage() {
   }, [toast])
 
   return (
-    <main className="w-full absolute h-screen -top-48 pr-6 pl-4 pt-12">
+    <main className="w-full absolute h-screen -top-48 pr-8 pt-12">
       <Tldraw className="rounded-xl" persistenceKey="fictional-tl-key" />
     </main>
   )
