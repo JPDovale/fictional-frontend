@@ -1,9 +1,8 @@
 import { Mapper } from '@/hooks/useMapper'
 import { Folder, Home, LogOut, Settings, Trash } from 'lucide-react'
-import { TbLayoutBoard } from 'react-icons/tb'
 
 export const projectBaseMapper: Mapper<
-  'project' | 'settings' | 'home' | 'logout' | 'trash' | 'folders' | 'draw'
+  'project' | 'settings' | 'home' | 'logout' | 'trash' | 'folders'
 > = {
   project: {
     name: 'project',
@@ -16,13 +15,6 @@ export const projectBaseMapper: Mapper<
     id: 'ef8a0be2',
     icon: Settings,
   },
-  draw: {
-    name: 'draw',
-    translation: 'Desenho',
-    id: '45de5a29',
-    icon: TbLayoutBoard,
-  },
-
   home: {
     name: 'home',
     translation: 'Inicio',

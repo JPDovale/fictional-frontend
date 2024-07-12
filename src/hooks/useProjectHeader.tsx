@@ -58,7 +58,6 @@ export function useProjectHeader() {
       'build-blocks': 'Bloco de construção',
       attributes: 'Atributos',
       files: 'Arquivos',
-      draw: 'Desenho',
     }
 
     const uuidsPathsMapper: { [x: string]: string } = {
