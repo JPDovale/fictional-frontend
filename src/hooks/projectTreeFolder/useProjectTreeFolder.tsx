@@ -5,6 +5,7 @@ import { useTimelinesTreeFolder } from './useTimelinesTreeFolder'
 import { useSettingsTreeFolder } from './useSettingsTreeFolder'
 import { useQuitProjectTreeFolder } from './useQuitProjectTreeFolder'
 import { useFoldersTreeFolder } from './useFoldersTreeFolder'
+import { useDrawTreeFolder } from './useDrawTreeFolder'
 
 export function useProjectTreeFolder() {
   const homeNode = useHomeTreeFolder()
@@ -12,6 +13,7 @@ export function useProjectTreeFolder() {
   const personsNode = usePersonsTreeFolder()
   const timelinesNode = useTimelinesTreeFolder()
   const settingsNode = useSettingsTreeFolder()
+  const drawNode = useDrawTreeFolder()
   const quitNode = useQuitProjectTreeFolder()
   const foldersNodes = useFoldersTreeFolder()
 
@@ -21,6 +23,7 @@ export function useProjectTreeFolder() {
     personsNode,
     timelinesNode,
     ...foldersNodes,
+    drawNode,
     settingsNode,
     quitNode,
   ]
