@@ -8,6 +8,9 @@ const nextConfig = {
       {
         hostname: 'pub-bc859334a56d4d2cb71576b27afa453e.r2.dev',
       },
+      {
+        hostname: 'lh3.googleusercontent.com',
+      },
     ],
   },
 }

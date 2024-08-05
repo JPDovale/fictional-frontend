@@ -4,6 +4,8 @@ export interface User {
   id: string
   name: string
   username: string
+  email: string
+  isSocialLogin: boolean
   isSubscriber: boolean
   skipLogin: boolean
   verified: boolean
